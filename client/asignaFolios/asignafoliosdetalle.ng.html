@@ -15,11 +15,12 @@
 			    <div class="row">
 						<div class="col-sm-4">					    
 				    	<label>Fecha</label>
-				    	<input name="fecha" type="text" class="form-control" placeholder="Fecha" ng-model="afd.folio.fecha" disabled="true">
+				    	<!-- <input name="fecha" type="text" class="form-control" placeholder="Fecha" ng-model="afd.folio.fecha" disabled="true"> -->
+				    	<span class="form-control" disabled="true">{{afd.folio.fecha | date : "dd-MM-yyyy"}}</span>
 			    	</div>			
 						<div class="col-sm-4">
 							<label for="ciudad">Ciudad *</label>
-					    <select name="tipo" ng-model="afd.folio.ciudad" class="form-control" required="">
+					    <select name="tipo" ng-model="afd.folio.ciudad" class="form-control" required="" disabled="true">
 							  <option value="CULIACAN">CULIACAN</option>
 							  <option value="MAZATLAN">MAZATLAN</option>
 							  <option value="LOS MOCHIS">LOS MOCHIS</option>
@@ -31,7 +32,7 @@
 						</div>
 						<div class="col-sm-4">					    
 				    	<label>Plan</label>
-				    	<input type="text" class="form-control" placeholder="Plan" ng-model="afd.folio.plan">
+				    	<input type="text" class="form-control" placeholder="Plan" ng-model="afd.folio.plan" disabled=""> 
 			    	</div>
 			    </div>
 			    <div class="row">
@@ -40,7 +41,7 @@
 				    	<input name="domicilio" type="text" class="form-control" placeholder="Domicilio" ng-model="afd.folio.domicilio" required="">
 			    	</div>
 			    	<div class="col-sm-10" valida>					    
-				    	<label>Refencia de Ubicación *</label>
+				    	<label>Referencia de Ubicación *</label>
 				    	<input name="referencia" type="text" class="form-control" placeholder="Referencia de ubicación" ng-model="afd.folio.referencia" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>					    
@@ -51,9 +52,7 @@
 				    	<label>Zona *</label>
 				    	<input name="zona" type="text" class="form-control" placeholder="Zona" ng-model="afd.folio.zona" required="">
 			    	</div>
-			    </div>	
-			    <div class="row">	
-						<div class="col-sm-4" valida>
+			    	<div class="col-sm-4" valida>
 				    	<label >Verificador *</label>
 							<select name="verificador" class="form-control select2" placeholder="Seleccione" ng-model="afd.folio.verificador_id" ng-disabled="afd.folio.segundavisita" required="">
 								<option  value="{{usuario._id}}" ng-repeat="usuario in afd.usuarios">
@@ -61,17 +60,21 @@
 								</option>
 							</select>
 						</div>
-						<div class="col-sm-4">					    
-				    	<label>Planear Segunda Visita</label>
-				    	<input type="checkbox" class="form-control" ng-model="afd.folio.segundavisita" checked="false">
+			    </div>	
+			    <div class="row">	
+						<div class="col-sm-2">					    
+				    	<label>Por Visitar</label>
+				    	<input type="checkbox" class="form-control" ng-model="afd.folio.estatus" checked="false">
+			    	</div>
+			    	<div class="col-sm-10">					    
+				    	<label>Comentarios</label>
+				    	<input type="textarea" class="form-control" placeholder="Comentarios" ng-model="afd.folio.comentarios">
 			    	</div>
 			    </div>	
-			        
 		  	</div>  
 				<div class="row">
 					<div class="col-sm-12">
 						<input type="submit" ng-click="afd.actualizar(afd.folio,form)" value="Actualizar" class="btn btn-primary" valida-form formulario="form"/>	
-									
 					</div>
 				</div>	  
 </form>

@@ -19,8 +19,7 @@
 				    	<input name="nombre" type="text" class="form-control" placeholder="Nombre" ng-model="fo.folio.nombre" required="">
 			    	</div>		    				    	    
 			    </div>
-			    <div class="row">
-			    	
+			    <div class="row">		    	
 			    	<div class="col-sm-4" ng-class="form.fecha.$invalid == true && fo.validation == true ? 'has-error':''" valida>
 							<label for="fecha">Fecha *</label>
 							<input name="fecha" date-time format="dd/MM/yyyy" class="form-control" view="year" max-view="year" min-view="date" ng-model="fo.folio.fecha" required="" />
@@ -79,7 +78,7 @@
 				<tr>
 					<th width="10%"><div class="text-center">Folio</div></th>
 					<th width="15%"><div class="text-center">Nombre</div></th>
-					<th width="10%"><div class="text-center">Fecha </div></th>
+					<th width="5%"><div class="text-center">Fecha </div></th>
 					<th width="10%"><div class="text-center">Ciudad</div></th>
 					<th width="15%"><div class="text-center">Analista</div></th>
 					<th width="10%">

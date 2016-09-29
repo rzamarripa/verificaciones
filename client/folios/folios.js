@@ -38,7 +38,7 @@ function FoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 		        return;
 		  }
 						
-			folio.estatus = 'Nuevo';
+			folio.estatus = "1";//Pendiente
 			folio.usuarioInserto = Meteor.userId();
 			Folios.insert(folio);
 			toastr.success('Guardado correctamente.');
@@ -88,7 +88,7 @@ function FoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 			Folios.update({_id:id}, {$set : {estatus : folio.estatus}});
 	};
 	
-	this.getAnalista= function(usuario_id)
+	this.getAnalista = function(usuario_id)
 	{		
 			var usuario = Meteor.users.findOne({_id:usuario_id});
 
@@ -96,5 +96,4 @@ function FoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 				 return usuario.profile.nombre;
 				 
 	};
-
 };

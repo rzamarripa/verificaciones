@@ -31,20 +31,47 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 		  }
 			console.log(folio);
 			
-			
-			
 			var idTemp = folio._id;
 			delete folio._id;		
 			folio.usuarioActualizo = Meteor.userId(); 
-			folio.estatus = "Asignado";
+			if (folio.estatus == true)
+				 folio.estatus = "6"; //Por Visitar
+			else
+				folio.estatus = "2";//Asignado
+			
 			Folios.update({_id:idTemp},{$set:folio});
 			toastr.success('Actualizado correctamente.');
 			$('.collapse').collapse('hide');
 			this.nuevo = true;
 			form.$setPristine();
 	    form.$setUntouched();
-	    $state.go('root.asignafolios');
+	    $state.go('root.panelFolios');
 			
 	};
-	
+	/*
+	this.PorVisitar = function(folio)
+	{
+			
+			console.log(folio);
+			
+			if (folio.estatus)
+			{
+			
+					folio.domicilio = "S/A";
+					folio.referencia = "S/A";
+					folio.telefono = "S/A";
+					folio.zona = "S/A";
+					folio.verificador = "S/A";
+			}
+			else
+			{
+					folio.domicilio = "";
+					folio.referencia = "";
+					folio.telefono = "";
+					folio.zona = "";
+					folio.verificador = "";
+			}
+			
+	};
+	*/
 };

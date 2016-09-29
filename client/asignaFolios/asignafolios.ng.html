@@ -15,11 +15,6 @@
 							Estatus
 						</div>
 					</th>
-					<th width="7%">
-						<div class="text-center">
-							Acciones
-						</div>
-					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,33 +23,13 @@
 			    <td>{{folio.nombre}}</td>
 			    <td>{{folio.fecha}} </td>
 			    <td>{{folio.ciudad}} </td>
-			    <td>{{fo.getAnalista(folio.analista_id)}}</td>
+			    <td>{{af.getAnalista(folio.analista_id)}}</td>
 			    <td>
 				    <div class="text-center">
-				    	<span ng-if="folio.estatus" class="label label-success">
-							  Activo
-							</span>
-							<span ng-if="!folio.estatus" class="label label-danger">
-							  Inactivo
+				    	<span class="label label-warning">
+							  {{folio.estatus}}
 							</span>
 				    </div>
-			    </td>
-			    <td>
-				    <div class="text-center">
-					    <div class="btn-group">
-							  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    <span class="caret"></span>
-							    <span class="sr-only">Toggle Dropdown</span>
-							  </button>
-							  <ul class="dropdown-menu text-left">
-							    <li><a href="#" ng-click="fo.editar(folio._id)"><i class="fa fa-pencil"></i> Editar</a></li>
-							    <li><a href="#" ng-click="fo.cambiarEstatus(folio._id)">
-							    				<i class="fa fa-{{folio.estatus ? 'trash' : 'check' }}"></i> {{folio.estatus ? "Desactivar" : "Activar" }}
-							    		</a>
-							    </li>
-							  </ul>
-							</div>
-				    </div>				    
 			    </td>
 		    </tr>
 			</tbody>

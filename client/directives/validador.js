@@ -21,6 +21,7 @@ function validador () {
   };
 }
 
+
 angular.module('verificaciones').directive('validaForm', validaForm);
 	function validaForm () {
   return {

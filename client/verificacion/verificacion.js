@@ -7,8 +7,8 @@ function verificacionCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 
   this.action = true;
 	this.subscribe('folios',()=>{
-			return [{verificador_id: Meteor.user()}]
-	});
+			return [{estatus: "2",verificador_id: Meteor.user() != undefined ? Meteor.user()._id : ""}]
+	});//Estatus 2 :  Asignado
 
   this.helpers({
 	  folios : () => {
