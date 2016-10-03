@@ -5,11 +5,8 @@ angular
 function LoginCtrl($scope, $meteor, $reactive, $state, toastr) {
 	let rc = $reactive(this).attach($scope);
 	
-<<<<<<< HEAD
 	var myCanvas = document.getElementById("myCanvas");
-=======
->>>>>>> d14e81896fe95af1675ce3c8b00c708eb3b5be37
-	
+
   this.credentials = {
     username: '',
     password: ''
