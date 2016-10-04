@@ -36,15 +36,12 @@
 		    	</div>
 		    	<div class="col-sm-4">
 						<label for="ciudad">Ciudad</label>
-				    <select name="tipo" ng-model="vd.folio.ciudad" class="form-control" required="" disabled="true">
-						  <option value="CULIACAN">CULIACAN</option>
-						  <option value="MAZATLAN">MAZATLAN</option>
-						  <option value="LOS MOCHIS">LOS MOCHIS</option>
-						  <option value="AHOME">AHOME</option>
-						  <option value="CONCORDIA">CONCORDIA</option>
-						  <option value="COSTA RICA">COSTA RICA</option>
-						  <option value="SINALOA D LEYVA">SINALOA D LEYVA</option>					  
-						</select>
+						<select name="ciudad" class="form-control select2" placeholder="Seleccione" ng-model="vd.folio.ciudad_id" disabled="true">
+								<option  value="{{ciudad._id}}" ng-repeat="ciudad in vd.ciudades">
+									{{ciudad.nombre}}
+								</option>
+							</select>
+				    
 					</div>			
 		    </div>
 		    <div class="row">

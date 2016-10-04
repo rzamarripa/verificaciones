@@ -13,6 +13,11 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	this.subscribe('usuarios',()=>{
 		return [{"profile.estatus": true, roles: ["Verificador"]}]
 	});
+	
+	this.subscribe('ciudad',()=>{
+		return [{estatus: true}]
+	});
+
 
   this.helpers({
 	  folio : () => {
@@ -20,6 +25,9 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	  },
 	   usuarios: ()=> {
 		  return Meteor.users.find({roles : ["Verificador"]});
+	  },
+	  ciudades : () => {
+		  return Ciudad.find();
 	  }
   });
   	
@@ -29,12 +37,14 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 		        toastr.error('Error al guardar los datos.');
 		        return;
 		  }
-			console.log(folio);
 			
 			var idTemp = folio._id;
 			delete folio._id;		
 			folio.usuarioActualizo = Meteor.userId(); 
-			if (folio.estatus == true)
+			
+			console.log(folio);
+			
+			if (folio.estatusPorVisitar == true)
 				 folio.estatus = "6"; //Por Visitar
 			else
 				folio.estatus = "2";//Asignado
@@ -45,33 +55,16 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			this.nuevo = true;
 			form.$setPristine();
 	    form.$setUntouched();
-	    $state.go('root.panelFolios');
-			
+	    $state.go('root.panelFolios');		
 	};
-	/*
-	this.PorVisitar = function(folio)
-	{
-			
-			console.log(folio);
-			
-			if (folio.estatus)
-			{
-			
-					folio.domicilio = "S/A";
-					folio.referencia = "S/A";
-					folio.telefono = "S/A";
-					folio.zona = "S/A";
-					folio.verificador = "S/A";
-			}
-			else
-			{
-					folio.domicilio = "";
-					folio.referencia = "";
-					folio.telefono = "";
-					folio.zona = "";
-					folio.verificador = "";
-			}
-			
+	
+	this.getCiudad = function(ciudad_id)
+	{		
+			var ciudad = Ciudad.findOne({_id:ciudad_id});
+
+			if (ciudad)
+				 return ciudad.nombre;
+				 
 	};
-	*/
+	
 };

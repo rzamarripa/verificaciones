@@ -16,6 +16,10 @@ function buscarFolioCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 		  }  
     }];
   });
+  
+	this.subscribe('ciudad',()=>{
+		return [{estatus: true}]
+	});
 
 	/*
 	this.subscribe('folios',()=>{
@@ -32,18 +36,27 @@ function buscarFolioCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 	  },
 	  usuarios: ()=> {
 		  return Meteor.users.find({roles : ["Analista"]});
+	  },
+	  ciudades : () => {
+		  return Ciudad.find();
 	  }
   });
   
-
-	
-
 	this.getAnalista = function(usuario_id)
 	{		
 			var usuario = Meteor.users.findOne({_id:usuario_id});
 
 			if (usuario)
 				 return usuario.profile.nombre;
+				 
+	};
+	
+	this.getCiudad = function(ciudad_id)
+	{		
+			var ciudad = Ciudad.findOne({_id:ciudad_id});
+
+			if (ciudad)
+				 return ciudad.nombre;
 				 
 	};
 };

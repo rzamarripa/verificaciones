@@ -16,10 +16,10 @@
 			</thead>
 			<tbody>
 		    <tr ng-repeat="folio in pfa.foliosVisitadosSegundaVisita">
-		    	<td><a href="/verificacion/{{folio._id}}">{{folio.folio}}</a></td>
+		    	<td><a ui-sref="root.verificaciondetalle({id : folio._id, op : 2})" >{{folio.folio}}</a></td>
 			    <td>{{folio.nombre}}</td>
 			    <td>{{folio.fecha.getUTCDate() +"/"+ (folio.fecha.getUTCMonth()+1) +"/"+ folio.fecha.getUTCFullYear()}} </td>
-			    <td>{{folio.ciudad}} </td>
+			    <td>{{pfa.getCiudad(folio.ciudad_id)}}</td>
 			    <td>{{pfa.getVerificador(folio.verificador_id)}}</td>
 			    <td>
 				    <div class="text-center">

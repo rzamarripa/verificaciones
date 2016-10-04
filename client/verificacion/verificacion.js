@@ -10,10 +10,26 @@ function verificacionCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 			return [{estatus: "2",verificador_id: Meteor.user() != undefined ? Meteor.user()._id : ""}]
 	});//Estatus 2 :  Asignado
 
+	this.subscribe('ciudad',()=>{
+		return [{estatus: true}]
+	});
+
   this.helpers({
 	  folios : () => {
 		  return Folios.find();
+	  },
+	  ciudades : () => {
+		  return Ciudad.find();
 	  }
   });
+  
+  this.getCiudad = function(ciudad_id)
+	{		
+			var ciudad = Ciudad.findOne({_id:ciudad_id});
+
+			if (ciudad)
+				 return ciudad.nombre;
+				 
+	};
   
 };

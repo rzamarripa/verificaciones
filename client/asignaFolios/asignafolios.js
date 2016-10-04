@@ -14,12 +14,19 @@ function asignaFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 		return [{"profile.estatus": true, roles: ["Analista"]}]
 	});
 	
+	this.subscribe('ciudad',()=>{
+		return [{estatus: true}]
+	});
+	
   this.helpers({
 	  folios : () => {
 		  return Folios.find();
 	  },
 	  usuarios: ()=> {
 		  return Meteor.users.find({roles : ["Analista"]});
+	  },
+	  ciudades : () => {
+		  return Ciudad.find();
 	  }
   });
    

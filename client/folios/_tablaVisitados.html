@@ -15,7 +15,7 @@
 		    	<td><a ui-sref="root.verificaciondetalle({id : folio._id, op : 1})" >{{folio.folio}}</a></td>
 			    <td>{{folio.nombre}}</td>
 			    <td>{{folio.fecha.getUTCDate() +"/"+ (folio.fecha.getUTCMonth()+1) +"/"+ folio.fecha.getUTCFullYear()}} </td>
-			    <td>{{folio.ciudad}} </td>
+			    <td>{{pf.getCiudad(folio.ciudad_id)}}</td>
 			    <td>{{pf.getAnalista(folio.analista_id)}} </td>
 			    <td>{{pf.getVerificador(folio.verificador_id)}}</td>
 		    </tr>

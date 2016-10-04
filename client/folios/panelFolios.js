@@ -14,6 +14,10 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 	this.subscribe('logistica',()=>{
 		return [{"profile.estatus": true}]
 	});
+	
+	this.subscribe('ciudad',()=>{
+		return [{}]
+	});
 
   this.helpers({
 	  folios : () => {
@@ -44,6 +48,9 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 	  foliosPorVisitar : () => {
 		  return Folios.find({estatus : "6"}).fetch();
 	  },
+	  ciudades : () => {
+		  return Ciudad.find();
+	  }
   });
   
   
@@ -130,6 +137,15 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 
 			if (usuario)
 				 return usuario.profile.nombre;
+				 
+	};
+	
+	this.getCiudad = function(ciudad_id)
+	{		
+			var ciudad = Ciudad.findOne({_id:ciudad_id});
+
+			if (ciudad)
+				 return ciudad.nombre;
 				 
 	};
 

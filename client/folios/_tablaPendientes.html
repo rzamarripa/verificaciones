@@ -14,7 +14,7 @@
 		    	<td><a href="/asignaFolios/{{folio._id}}">{{folio.folio}}</a></td>
 			    <td>{{folio.nombre}}</td>
 			    <td>{{folio.fecha.getUTCDate() +"/"+ (folio.fecha.getUTCMonth()+1) +"/"+ folio.fecha.getUTCFullYear()}} </td>
-			    <td>{{folio.ciudad}} </td>
+			    <td>{{pf.getCiudad(folio.ciudad_id)}}</td>
 			    <td>{{pf.getAnalista(folio.analista_id)}}</td>
 		    </tr>
 			</tbody>

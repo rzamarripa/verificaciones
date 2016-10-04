@@ -12,6 +12,6 @@ Meteor.publish("buscarFolio",function(options){
 	
 	//Counts.publish(this, 'number-folios',Folios.find({}),{noReady: true});	
 	
-	console.log(selector);
+	//console.log(selector);
 	return Folios.find(selector, options.options);
 });

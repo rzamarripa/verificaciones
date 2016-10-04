@@ -8,6 +8,15 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	var myCanvas = document.getElementById("myCanvas");
 	ctx = myCanvas.getContext("2d");
 
+	this.subscribe('ciudad',()=>{
+		return [{estatus: true}]
+	});
+	
+	this.helpers({
+	  ciudades : () => {
+		  return Ciudad.find();
+	  }
+  });
 	
 	this.op = $stateParams.op;
 

@@ -17,6 +17,10 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 	this.subscribe('usuarios',()=>{
 		return [{"profile.estatus": true, roles: ["Analista"]}]
 	});
+		
+	this.subscribe('ciudad',()=>{
+		return [{}]
+	});
 
   this.helpers({
 	  folios : () => {
@@ -24,6 +28,9 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 	  },
 	  usuarios: ()=> {
 		  return Meteor.users.find({roles : ["Analista"]});
+	  },
+	  ciudades : () => {
+		  return Ciudad.find();
 	  }
   });
   
@@ -33,7 +40,9 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 	{	
 				//console.log(rc.foliosArreglo);
 				//console.log(this.foliosArreglo.Hoja1[0].Nombre);
-		
+				
+				
+				
 	
 		 		   	  
 	};
@@ -45,27 +54,70 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 		       return;
 		  }
 		  
+		 
+		  var ba = 1;
+		  
 		  for (var i=0; i<rc.foliosArreglo.Hoja1.length;i++)
 		  {
-					f = {folio:"",nombre:"",fecha:"",ciudad:"",plan:"",estatus:"",analista_id:"",usuarioInserto:""};
+					f = {folio:"",nombre:"",fecha:"",ciudad_id:"",plan:"",estatus:"",analista_id:"",usuarioInserto:""};
 					f.folio = rc.foliosArreglo.Hoja1[i].Folio;
 					f.nombre = rc.foliosArreglo.Hoja1[i].Nombre;
 					f.fecha = new Date(rc.foliosArreglo.Hoja1[i].Fecha);
-					f.ciudad = rc.foliosArreglo.Hoja1[i].Ciudad;
+					
+					
+					var ciudad = Ciudad.findOne({"nombre":rc.foliosArreglo.Hoja1[i].Ciudad});	
+					console.log(ciudad);		
+					
+					//f.ciudad_id = rc.foliosArreglo.Hoja1[i].Ciudad;
+					f.ciudad_id = ciudad._id;
 					f.plan = rc.foliosArreglo.Hoja1[i].Plan;	
-					var usuario = Meteor.users.findOne({"profile.ciudad":rc.foliosArreglo.Hoja1[i].Ciudad});	
+					
+					//var usuario = Meteor.users.findOne({"profile.ciudad":rc.foliosArreglo.Hoja1[i].Ciudad});	
 					//console.log(usuario._id);		
-					f.analista_id = usuario._id;
+					
+					
+					f.analista_id = rc.foliosArreglo.Hoja1[i].analista_id;
+					
 					f.estatus = "1";
 					f.usuarioInserto = Meteor.userId();
-					//console.log(f);
-					Folios.insert(f);	
+					
+					if (f.analista_id != undefined)
+					{
+						 //console.log("folio", f);
+	 					 Folios.insert(f);	
+	 					 //console.log("ANTES ", rc.foliosArreglo.Hoja1.length , i);
+	 					 rc.foliosArreglo.Hoja1.splice(i, 1);
+	 					 //console.log("DESPUES" ,rc.foliosArreglo.Hoja1.length, i);
+	 					 i--;
+					}
+					else
+					{
+						//console.log("false ",  f);
+					}
 		  }	  
-		  rc.foliosArreglo = {};
-		  toastr.success('Guardado correctamente.');
+		  //rc.foliosArreglo = {};
+		  //toastr.success('Guardado correctamente.');
 
-			$state.go('root.importarfolios');
+			//$state.go('root.importarfolios');
+
 	};
+	
+	this.asignaAnalista = function(){
+			
+			for (var i=0; i<rc.foliosArreglo.Hoja1.length;i++)
+		  {
+					  f = {folio:"",nombre:"",fecha:"",ciudad:"",plan:"",estatus:"",analista_id:"",usuarioInserto:""};
+						f.ciudad = rc.foliosArreglo.Hoja1[i].Ciudad;
+						
+						var usuario = Meteor.users.findOne({"profile.ciudad":rc.foliosArreglo.Hoja1[i].Ciudad});			
+						rc.foliosArreglo.Hoja1[i].analista_id = usuario._id;				
+						//f.analista_id = usuario._id;
+						console.log(rc.foliosArreglo.Hoja1[i]);
+
+			}
+
+	};
+	
 	
 	this.validarExistencia = function(folio){
 		var existe = Folios.find(folio).count();
@@ -73,7 +125,7 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 			return false;
 		else
 			return true;
-	}
+	};
 	
 	this.getAnalista = function(ciudad)
 	{		
@@ -114,13 +166,13 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 		var folios = Folios.find().fetch();
 		rc.foliosArreglo = JSON.parse(output);
 		
-		console.log("todo",rc.foliosArreglo);
+		//console.log("todo",rc.foliosArreglo);
 		_.each(rc.foliosArreglo.Hoja1, function(folioArreglo){
-			console.log("folioArreglo", folioArreglo);
+			//console.log("folioArreglo", folioArreglo);
 			_.each(folios, function(folio){
-			console.log("folio", folio);
+			//console.log("folio", folio);
 				if(folio.folio == folioArreglo.Folio){
-					console.log("si");
+					//console.log("si");
 					folioArreglo.existe = true;
 					
 				}
@@ -131,7 +183,7 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 	
 	var xlf = document.getElementById('xlf');
 	function handleFile(e) {
-
+		
 		var files = e.target.files;
 		var f = files[0];
 		{

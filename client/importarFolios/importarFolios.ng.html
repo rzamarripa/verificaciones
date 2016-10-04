@@ -14,6 +14,9 @@
 						<div class="col-sm-3">
 							<input ng-click="imf.guardar()" value="Guardar" class="btn btn-primary"/>			
 						</div>
+						<div class="col-sm-3">
+							<input ng-click="imf.asignaAnalista()" value="Asigna Analista" class="btn btn-primary"/>			
+						</div>
 					</div> 
 		  	</div> 	
 		  </form>
@@ -29,7 +32,7 @@
 					<th width="5%"><div class="text-center">Fecha </div></th>
 					<th width="10%"><div class="text-center">Ciudad</div></th>
 					<th width="5%"><div class="text-center">Plan</div></th>
-					<th width="10%"><div class="text-center">Verificador</div></th>
+					<th width="10%"><div class="text-center">Analista</div></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -44,13 +47,12 @@
 			    		<select required ng-model="folio.analista_id" class="form-control" ng-options="usuario._id as usuario.profile.nombre + ' ' + usuario.profile.apPaterno + ' ' + usuario.profile.apMaterno for usuario in imf.usuarios" ng-selected="usuario.profile.ciudad == folio.Ciudad">
 			    		</select>
 			    		-->
-			    <!--{{imf.getAnalista(folio.Ciudad)}}-->
+			    <!--{{imf.getAnalista(folio.Ciudad)}} ng-selected="usuario.profile.ciudad == folio.Ciudad"-->
 			    		<select required ng-model="folio.analista_id" class="form-control">
-							   <option ng-repeat="usuario in imf.usuarios" value="{{usuario._id}}" ng-selected="usuario.profile.ciudad == folio.Ciudad">
+							   <option ng-repeat="usuario in imf.usuarios" value="{{usuario._id}}">
 							   		{{usuario.profile.nombre + ' ' + usuario.profile.apPaterno + ' ' + usuario.profile.apMaterno}}
 							   </option>
 							</select>
-			
 			    </td>
 		    </tr>
 			</tbody>

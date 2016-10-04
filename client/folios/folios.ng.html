@@ -24,23 +24,12 @@
 							<label for="fecha">Fecha *</label>
 							<input name="fecha" date-time format="dd/MM/yyyy" class="form-control" view="year" max-view="year" min-view="date" ng-model="fo.folio.fecha" required="" />
 						</div>
-						
-						<!--
-						<div class="col-sm-4" valida>					    
-				    	<label>Fecha *</label>
-				    	<input name="fecha" type="text" class="form-control" placeholder="Fecha" ng-model="fo.folio.fecha" required="">
-			    	</div>
-						-->
 						<div class="col-sm-4" valida>
 							<label for="ciudad">Ciudad *</label>
-					    <select name="tipo" ng-model="fo.folio.ciudad" class="form-control" required="">
-							  <option value="CULIACAN">CULIACAN</option>
-							  <option value="MAZATLAN">MAZATLAN</option>
-							  <option value="LOS MOCHIS">LOS MOCHIS</option>
-							  <option value="AHOME">AHOME</option>
-							  <option value="CONCORDIA">CONCORDIA</option>
-							  <option value="COSTA RICA">COSTA RICA</option>
-							  <option value="SINALOA D LEYVA">SINALOA D LEYVA</option>					  
+							<select name="ciudad" class="form-control select2" placeholder="Seleccione" ng-model="fo.folio.ciudad_id" required="">
+								<option  value="{{ciudad._id}}" ng-repeat="ciudad in fo.ciudades">
+									{{ciudad.nombre}}
+								</option>
 							</select>
 						</div>
 						<div class="col-sm-4">					    
@@ -71,6 +60,7 @@
 </div>
 
 <!-- List -->
+<!--
 <div class="row">
 	<div class="col-sm-12">
 		<table class="table table-bordered">
@@ -97,8 +87,8 @@
 		    <tr ng-repeat="folio in fo.folios">
 		    	<td>{{folio.folio}} </td>
 			    <td>{{folio.nombre}}</td>
-			    <td>{{folio.fecha}} </td>
-			    <td>{{folio.ciudad}} </td>
+			   <td>{{folio.fecha.getUTCDate() +"/"+ (folio.fecha.getUTCMonth()+1) +"/"+ folio.fecha.getUTCFullYear()}} </td>
+			    <td>{{fo.getCiudad(folio.ciudad_id)}}</td>
 			    <td>{{fo.getAnalista(folio.analista_id)}}</td>
 			    <td>
 				    <div class="text-center">
@@ -132,5 +122,5 @@
 		</table>
 	</div>
 </div>
-
+-->
 

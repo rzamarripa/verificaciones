@@ -17,7 +17,7 @@
 			    <td>{{folio.nombre}}</td>
 			    <td>{{folio.domicilio}} </td>
 			    <td>{{folio.fecha.getUTCDate() +"/"+ (folio.fecha.getUTCMonth()+1) +"/"+ folio.fecha.getUTCFullYear()}} </td>
-			    <td>{{folio.ciudad}} </td>
+			    <td>{{ver.getCiudad(folio.ciudad_id)}}</td>
 		    </tr>
 			</tbody>
 		</table>

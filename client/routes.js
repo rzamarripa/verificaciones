@@ -185,4 +185,14 @@ angular.module('verificaciones').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.ciudad', {
+      url: '/ciudad/',
+      templateUrl: 'client/ciudad/ciudad.ng.html',
+      controller: 'CiudadCtrl as ciu',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
 }]);     

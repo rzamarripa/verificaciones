@@ -1,5 +1,5 @@
 angular
-  .module('casserole')
+  .module('verificaciones')
   .controller('PizarronCtrl', PizarronCtrl);
  
 function PizarronCtrl($scope, $meteor, $reactive, $stateParams, $state, toastr) {
