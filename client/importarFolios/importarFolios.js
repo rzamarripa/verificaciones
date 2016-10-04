@@ -40,11 +40,7 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 	{	
 				//console.log(rc.foliosArreglo);
 				//console.log(this.foliosArreglo.Hoja1[0].Nombre);
-				
-				
-				
-	
-		 		   	  
+					   	  
 	};
 	
 	this.guardar = function()
@@ -53,9 +49,6 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 					 toastr.error('Error al guardar los datos.');
 		       return;
 		  }
-		  
-		 
-		  var ba = 1;
 		  
 		  for (var i=0; i<rc.foliosArreglo.Hoja1.length;i++)
 		  {
@@ -68,13 +61,9 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 					var ciudad = Ciudad.findOne({"nombre":rc.foliosArreglo.Hoja1[i].Ciudad});	
 					console.log(ciudad);		
 					
-					//f.ciudad_id = rc.foliosArreglo.Hoja1[i].Ciudad;
 					f.ciudad_id = ciudad._id;
 					f.plan = rc.foliosArreglo.Hoja1[i].Plan;	
-					
-					//var usuario = Meteor.users.findOne({"profile.ciudad":rc.foliosArreglo.Hoja1[i].Ciudad});	
-					//console.log(usuario._id);		
-					
+										
 					
 					f.analista_id = rc.foliosArreglo.Hoja1[i].analista_id;
 					
@@ -83,11 +72,8 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 					
 					if (f.analista_id != undefined)
 					{
-						 //console.log("folio", f);
 	 					 Folios.insert(f);	
-	 					 //console.log("ANTES ", rc.foliosArreglo.Hoja1.length , i);
 	 					 rc.foliosArreglo.Hoja1.splice(i, 1);
-	 					 //console.log("DESPUES" ,rc.foliosArreglo.Hoja1.length, i);
 	 					 i--;
 					}
 					else
@@ -109,15 +95,14 @@ function importarFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, t
 					  f = {folio:"",nombre:"",fecha:"",ciudad:"",plan:"",estatus:"",analista_id:"",usuarioInserto:""};
 						f.ciudad = rc.foliosArreglo.Hoja1[i].Ciudad;
 						
-						var usuario = Meteor.users.findOne({"profile.ciudad":rc.foliosArreglo.Hoja1[i].Ciudad});			
-						rc.foliosArreglo.Hoja1[i].analista_id = usuario._id;				
-						//f.analista_id = usuario._id;
-						console.log(rc.foliosArreglo.Hoja1[i]);
+						var c = Ciudad.findOne({"nombre":rc.foliosArreglo.Hoja1[i].Ciudad});	
+						console.log(c._id);
+						var u = Meteor.users.findOne({"profile.ciudad_id":c._id, roles : ["Analista"]});		
+						console.log(u);
+						rc.foliosArreglo.Hoja1[i].analista_id = u._id;
 
 			}
-
 	};
-	
 	
 	this.validarExistencia = function(folio){
 		var existe = Folios.find(folio).count();

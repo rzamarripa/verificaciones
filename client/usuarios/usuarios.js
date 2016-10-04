@@ -9,11 +9,18 @@ function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	this.subscribe('usuarios',()=>{
 			return [{}]
 	});
+	
+	this.subscribe('ciudad',()=>{
+		return [{estatus: true}]
+	});
 
   this.helpers({
 	  usuarios : () => {
 		  return Meteor.users.find({});
 	  },
+	  ciudades : () => {
+		  return Ciudad.find();
+	  }
   });
   
   this.nuevo = true;  
@@ -75,13 +82,14 @@ function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 		
 	this.cambiarEstatus = function(id)
 	{
-			var usuario = Usuarios.findOne({_id:id});
-			if(usuario.estatus == true)
-				usuario.estatus = false;
+			var usuario =  Meteor.users.findOne({_id:id});
+			if(usuario.profile.estatus == true)
+				usuario.profile.estatus = false;
 			else
-				usuario.estatus = true;
+				usuario.profile.estatus = true;
 			
-			Usuarios.update({_id:id}, {$set : {estatus : usuario.estatus}});
+			Meteor.call('updateUsuario', usuario, usuario.profile.tipo);
+			//Usuarios.update({_id:id}, {$set : {estatus : usuario.profile.estatus}});
 	};
 
 	this.tomarFoto = function(){

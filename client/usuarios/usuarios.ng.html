@@ -65,7 +65,11 @@
 			    	</div>
 			    	<div class="col-sm-4" valida>
 			    		<label>Ciudad *</label>
-				    	<input name="ciudad" type="text" class="form-control" placeholder="Ciudad" ng-model="us.usuario.profile.ciudad" required="">
+				    	<select name="ciudad" class="form-control select2" placeholder="Seleccione" ng-model="us.usuario.profile.ciudad_id" required="">
+								<option  value="{{ciudad._id}}" ng-repeat="ciudad in us.ciudades">
+									{{ciudad.nombre}}
+								</option>
+							</select>
 			    	</div>
 			    	<div class="col-sm-4">
 						<label for="talla">Fotografía</label>
