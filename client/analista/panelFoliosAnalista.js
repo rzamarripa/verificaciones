@@ -8,14 +8,14 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 	
   this.action = true;
 	this.subscribe('folios',()=>{
-			return [{estatus :{$gte:"1",$lt:"6"}, analista_id:  Meteor.userId() }]
+			return [{verificacionEstatus :{$gte:"1",$lt:"7"}, folioEstatus: "1" , analista_id:  Meteor.userId() }]
 	});
 		
 	this.subscribe('logistica',()=>{
 		return [{"profile.estatus": true}]
 	});
 	
-	this.subscribe('ciudad',()=>{
+	this.subscribe('zona',()=>{
 		return [{estatus: true}]
 	});
 
@@ -24,28 +24,25 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 		  return Folios.find();
 	  },
 	  foliosVisitados : () => {	
-		  var visitados = Folios.find({estatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
+		  var visitados = Folios.find({verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
 		  if(visitados){
 			  //console.log(visitados)
-			  return Folios.find({estatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
+			  return Folios.find({verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
 		  }
 	  },
 	  foliosVisitadosSegundaVisita : () => {
-		  return Folios.find({estatus : "3", verificacionRazon: "No encontrado cliente"}).fetch();
+		  return Folios.find({verificacionEstatus : "3", verificacionRazon: "No encontrado cliente"}).fetch();
 	  },
 		foliosNoEncontrados : () => {
-		  return Folios.find({estatus : "4"}).fetch();
+		  return Folios.find({verificacionEstatus : "4"}).fetch();
 	  },
 	  foliosNoVisitados : () => {
-		  return Folios.find({estatus : "5"}).fetch();
+		  return Folios.find({verificacionEstatus : "5"}).fetch();
 	  },
-	  ciudades : () => {
-		  return Ciudad.find();
+	  zonas : () => {
+		  return Zona.find();
 	  }
   });
-  
-  
-  
   
   
   this.nuevo = true;  
@@ -94,6 +91,7 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 			var idTemp = folio._id;
 			delete folio._id;		
 			folio.usuarioActualizo = Meteor.userId(); 
+			folio.verificoAnalista = Meteor.userId();
 			Folios.update({_id:idTemp},{$set:folio});
 			toastr.success('Actualizado correctamente.');
 			$('.collapse').collapse('hide');
@@ -102,18 +100,14 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 	    form.$setUntouched();
 	};
 		
-	this.cambiarEstatus = function(id)
+	this.finalizarFolio = function(id)
 	{
+			console.log(id);
 			var folio = Folios.findOne({_id:id});
-			/*if(folio.estatus == true)
-				folio.estatus = false;
-			else
-			*/
-			folio.estatus = "6";
-			
-			Folios.update({_id:id}, {$set : {estatus : folio.estatus}});
+			folio.folioEstatus = "2";			//Folio Finalizado
+			Folios.update({_id:id}, {$set : {folioEstatus : folio.folioEstatus}});
 	};
-	
+		
 	this.getAnalista = function(usuario_id)
 	{		
 			var usuario = Meteor.users.findOne({_id:usuario_id});
@@ -131,12 +125,13 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 				 return usuario.profile.nombre;
 				 
 	};
-	this.getCiudad = function(ciudad_id)
+	
+	this.getZona = function(zona_id)
 	{		
-			var ciudad = Ciudad.findOne({_id:ciudad_id});
+			var zona = Zona.findOne({_id:zona_id});
 
-			if (ciudad)
-				 return ciudad.nombre;
+			if (zona)
+				 return zona.nombre;
 				 
 	};
 

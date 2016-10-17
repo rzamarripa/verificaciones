@@ -1,0 +1,16 @@
+<h2>Verificadores</h2>
+<div class="row well">
+	<form name="form" class="form-horizontal" role="form" novalidate>
+		<div class="col-sm-4" valida>
+			<label for="fechaInicial">Fecha inicial *</label>
+			<input name="fechaInicial" date-time format="dd-MM-yyyy" class="form-control" view="year" max-view="year" min-view="date" ng-model="dir.buscar.fechaInicial" required="" />
+		</div>
+		<div class="col-sm-4" valida>
+			<label for="fechaFinal">Fecha final *</label>
+			<input name="fechaFinal" date-time format="dd-MM-yyyy" class="form-control" view="year" max-view="year" min-view="date" ng-model="dir.buscar.fechaFinal" required="" />
+		</div>
+		<div class="col-sm-3" style="padding-top: 20px;">
+			<input type="submit" ng-click="dir.buscarVerificadores(dir.buscar,form)" value="Buscar" class="btn btn-primary" valida-form formulario="form">			
+		</div>
+	</form>
+</div>

@@ -10,7 +10,7 @@ function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 			return [{}]
 	});
 	
-	this.subscribe('ciudad',()=>{
+	this.subscribe('zona',()=>{
 		return [{estatus: true}]
 	});
 
@@ -18,8 +18,8 @@ function UsuariosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr)
 	  usuarios : () => {
 		  return Meteor.users.find({});
 	  },
-	  ciudades : () => {
-		  return Ciudad.find();
+	  zonas : () => {
+		  return Zona.find();
 	  }
   });
   

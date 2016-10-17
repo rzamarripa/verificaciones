@@ -14,7 +14,7 @@
 								<a ui-sref="root.usuarios" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-users"></i></span>Usuarios</a>
 							</div>			
 							<div class="col-sm-3">
-								<a ui-sref="root.ciudad" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-university"></i></span>Ciudades</a>
+								<a ui-sref="root.zona" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-university"></i></span>Zona</a>
 							</div>		
 						</div>
           </div>
@@ -51,6 +51,9 @@
           </div>
           <div class="widget-body">
           	<div class="row">
+	          	<div class="col-sm-3">
+								<a ui-sref="root.buscarnombre" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-search"></i></span>Buscar Nombre</a>
+							</div>
 							<div class="col-sm-3">
 								<a ui-sref="root.ciudad" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-university"></i></span>Ciudades</a>
 							</div>			
@@ -79,9 +82,12 @@
 							<div class="col-sm-3">
 								<a ui-sref="root.buscarfolio" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-search"></i></span>Buscar Folio</a>
 							</div>	
+							<div class="col-sm-3">
+								<a ui-sref="root.buscarnombre" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-search"></i></span>Buscar Nombre</a>
+							</div>
 							<div class="row">
 							<div class="col-sm-3">
-								<a ui-sref="root.ciudad" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-university"></i></span>Ciudades</a>
+								<a ui-sref="root.ciudad" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-university"></i></span>Zonas</a>
 							</div>			
 						</div>	
 						</div>
@@ -104,6 +110,27 @@
 						<div class="row">
 							<div class="col-sm-3">
 								<a ui-sref="root.panelFoliosAnalista" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-folder-o"></i></span>Panel de Folios</a>
+							</div>
+						</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Menú de Director -->
+<section id="Director" data-widget-grid="data-widget-grid" ng-if="currentUser.roles[0] == 'Director'">	
+  <div class="row">
+    <div class="col-sm-12">
+      <div data-widget-color="blue" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-fullscreenbutton="false" data-jarvis-widget="data-jarvis-widget">
+        <header>
+          <h2>Opciones del sistema</h2>
+        </header>
+        <div>
+          <div class="widget-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<a ui-sref="root.direccion" href="javascript:void(0);" class="btn btn-labeled btn-warning btn-block" style="text-align: left"> <span class="btn-label"><i class="fa fa-lg fa-fw fa-folder-o"></i></span>Dirección</a>
 							</div>
 						</div>
           </div>

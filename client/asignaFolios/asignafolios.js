@@ -7,14 +7,14 @@ function asignaFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 
   this.action = true;
 	this.subscribe('folios',()=>{
-			return [{estatus: "1"}]//Pendiente
+			return [{verificacionEstatus: "1"}]			//Pendiente
 	});
 	
 	this.subscribe('usuarios',()=>{
 		return [{"profile.estatus": true, roles: ["Analista"]}]
 	});
 	
-	this.subscribe('ciudad',()=>{
+	this.subscribe('zona',()=>{
 		return [{estatus: true}]
 	});
 	
@@ -25,8 +25,8 @@ function asignaFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 	  usuarios: ()=> {
 		  return Meteor.users.find({roles : ["Analista"]});
 	  },
-	  ciudades : () => {
-		  return Ciudad.find();
+	  zonas : () => {
+		  return Zona.find();
 	  }
   });
    

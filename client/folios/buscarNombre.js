@@ -1,21 +1,23 @@
 angular
 .module("verificaciones")
-.controller("buscarFolioCtrl", buscarFolioCtrl);
-function buscarFolioCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
+.controller("buscarNombreCtrl", buscarNombreCtrl);
+function buscarNombreCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 
 	let rc = $reactive(this).attach($scope);
 	
 	this.buscar = {};
-	this.buscar.folio = '';
-		
-	this.subscribe('buscarFolio', () => {
+	
+	this.buscar.nombre = '';
+  
+  this.subscribe('buscarNombre', () => {
     return [{
 	    options : { limit: 20 },
 	    where : { 
-		    folio : this.getReactively('buscar.folio') 		  
+		    nombre : this.getReactively('buscar.nombre') 		  
 		  }  
     }];
   });
+
   
 	this.subscribe('zona',()=>{
 		return [{estatus: true}]

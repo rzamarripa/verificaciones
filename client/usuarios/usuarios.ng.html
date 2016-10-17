@@ -64,10 +64,10 @@
 				    	<input type="text" class="form-control" placeholder="Correo" ng-model="us.usuario.profile.correo">
 			    	</div>
 			    	<div class="col-sm-4" valida>
-			    		<label>Ciudad *</label>
-				    	<select name="ciudad" class="form-control select2" placeholder="Seleccione" ng-model="us.usuario.profile.ciudad_id" required="">
-								<option  value="{{ciudad._id}}" ng-repeat="ciudad in us.ciudades">
-									{{ciudad.nombre}}
+			    		<label>Zona *</label>
+				    	<select name="zona" class="form-control select2" placeholder="Seleccione" ng-model="us.usuario.profile.zona_id" required="">
+								<option  value="{{zona._id}}" ng-repeat="zona in us.zonas">
+									{{zona.nombre}}
 								</option>
 							</select>
 			    	</div>

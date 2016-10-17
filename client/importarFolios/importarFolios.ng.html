@@ -14,9 +14,6 @@
 						<div class="col-sm-3">
 							<input ng-click="imf.guardar()" value="Guardar" class="btn btn-primary"/>			
 						</div>
-						<div class="col-sm-3">
-							<input ng-click="imf.asignaAnalista()" value="Asigna Analista" class="btn btn-primary"/>			
-						</div>
 					</div> 
 		  	</div> 	
 		  </form>
@@ -30,24 +27,21 @@
 					<th width="5%"><div class="text-center">Folio</div></th>
 					<th width="10%"><div class="text-center">Nombre</div></th>
 					<th width="5%"><div class="text-center">Fecha </div></th>
-					<th width="10%"><div class="text-center">Ciudad</div></th>
+					<th width="10%"><div class="text-center">Zona</div></th>
 					<th width="5%"><div class="text-center">Plan</div></th>
+					<th width="5%"><div class="text-center">Prioridad</div></th>
 					<th width="10%"><div class="text-center">Analista</div></th>
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="folio in imf.foliosArreglo.Hoja1" ng-class="folio.existe == true ? 'warning' : ''">
+		    <tr ng-repeat="folio in imf.foliosArreglo.Hoja1" ng-class="folio.existe == true ? 'danger' : ''">
 		    	<td>{{folio.Folio}}</td>
 			    <td>{{folio.Nombre}}</td>
 			    <td>{{folio.Fecha}}</td>
-			    <td>{{folio.Ciudad}}</td>
+			    <td>{{folio.Zona}}</td>
 			    <td>{{folio.Plan}}</td>
+			    <td>{{folio.Prioridad}}</td>
 			    <td>
-			    		<!--
-			    		<select required ng-model="folio.analista_id" class="form-control" ng-options="usuario._id as usuario.profile.nombre + ' ' + usuario.profile.apPaterno + ' ' + usuario.profile.apMaterno for usuario in imf.usuarios" ng-selected="usuario.profile.ciudad == folio.Ciudad">
-			    		</select>
-			    		-->
-			    <!--{{imf.getAnalista(folio.Ciudad)}} ng-selected="usuario.profile.ciudad == folio.Ciudad"-->
 			    		<select required ng-model="folio.analista_id" class="form-control">
 							   <option ng-repeat="usuario in imf.usuarios" value="{{usuario._id}}">
 							   		{{usuario.profile.nombre + ' ' + usuario.profile.apPaterno + ' ' + usuario.profile.apMaterno}}
@@ -59,12 +53,6 @@
 		</table>
 	</div>
 </div>
-
-<!--
-<select required ng-model="prospecto.empleado_id" class="form-control" ng-options="empleado._id as empleado.nombre + ' ' + empleado.apPaterno + ' ' + empleado.apMaterno for empleado in fa.empleados" ng-change="fa.asignar(prospecto, prospecto.empleado_id)">
-</select>
-
--->
 
 
 

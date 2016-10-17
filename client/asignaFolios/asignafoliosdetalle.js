@@ -14,7 +14,7 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 		return [{"profile.estatus": true, roles: ["Verificador"]}]
 	});
 	
-	this.subscribe('ciudad',()=>{
+	this.subscribe('zona',()=>{
 		return [{estatus: true}]
 	});
 
@@ -26,8 +26,8 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	   usuarios: ()=> {
 		  return Meteor.users.find({roles : ["Verificador"]});
 	  },
-	  ciudades : () => {
-		  return Ciudad.find();
+	  zonas : () => {
+		  return Zona.find();
 	  }
   });
   	
@@ -42,12 +42,13 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			delete folio._id;		
 			folio.usuarioActualizo = Meteor.userId(); 
 			
-			console.log(folio);
+			folio.verificacionRazon = "";
+			//console.log(folio);
 			
 			if (folio.estatusPorVisitar == true)
-				 folio.estatus = "6"; //Por Visitar
+				 folio.verificacionEstatus = "6"; 	//Por Visitar
 			else
-				folio.estatus = "2";//Asignado
+				folio.verificacionEstatus = "2";		//Asignado
 			
 			Folios.update({_id:idTemp},{$set:folio});
 			toastr.success('Actualizado correctamente.');
@@ -58,13 +59,10 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	    $state.go('root.panelFolios');		
 	};
 	
-	this.getCiudad = function(ciudad_id)
+	this.getZona = function(zona_id)
 	{		
-			var ciudad = Ciudad.findOne({_id:ciudad_id});
-
-			if (ciudad)
-				 return ciudad.nombre;
-				 
+			var zona = Zona.findOne({_id:zona_id});
+			if (zona)
+				 return zona.nombre;		 
 	};
-	
 };

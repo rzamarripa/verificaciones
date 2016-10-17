@@ -5,16 +5,22 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 
 	let rc = $reactive(this).attach($scope);
 	
+	Window = rc;
+	
+	
+	this.fecha = {};
+	this.fechavisita = new Date();
+	
 	var myCanvas = document.getElementById("myCanvas");
 	ctx = myCanvas.getContext("2d");
 
-	this.subscribe('ciudad',()=>{
+	this.subscribe('zona',()=>{
 		return [{estatus: true}]
 	});
 	
 	this.helpers({
-	  ciudades : () => {
-		  return Ciudad.find();
+	  zonas : () => {
+		  return Zona.find();
 	  }
   });
 	
@@ -65,7 +71,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	  folio : () => {
 	  	var folioActual = Folios.findOne();
 	  	if(folioActual){
-	  		folioSel = folioActual.estatus;
+	  		folioSel = folioActual.verificacionEstatus;
 		  	//console.log(folioSel);
 				if(folioSel == 3){
 					//console.log("pos");
@@ -76,6 +82,8 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 												{nombre : "Domicilio deshabitado"},
 												{nombre : "Domicilio laboral"},
 												{nombre : "Domicilio bajas condiciones"},
+												{nombre : "Vecinos confirman"},
+												{nombre : "Vecinos no conocen"},
 												{nombre : "No encontrado cliente"},];
 				}else if(folioSel == 4){
 					//console.log("neg");
@@ -93,21 +101,37 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
    
   this.actualizar = function(folio,form)
 	{			
-			console.log(folio);
+			
 			if(form.$invalid){
 		        toastr.error('Error al guardar los datos.');
 		        return;
 		  }
 		  
+		  var tip = $stateParams.tip;
+		   
+		  if (folio.fechavisita)
+		  	 folio.fechavisita = this.fechavisita;
+		  
+		  if (tip == 2)
+		   	 folio.verificoAnalista = Meteor.userId();
+		  		  
 			var idTemp = folio._id;
 			delete folio._id;		
+			
+			
 			Folios.update({_id:idTemp},{$set:folio});
 			toastr.success('Actualizado correctamente.');
 			$('.collapse').collapse('hide');
 			this.nuevo = true;
 			form.$setPristine();
 	    form.$setUntouched();
-	    $state.go('root.verificacion');
+	    
+	   
+	    
+	    if (tip == 1)
+	    	$state.go('root.verificacion');
+	    else
+	    	$state.go('root.panelFoliosAnalista');	
 	};
   
   	this.tomarFoto = function(){
@@ -121,15 +145,15 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 
 			var folio = Folios.findOne({_id:id});
 
-			folio.estatus = "7"; //Folio Finalizado
+			folio.folioEstatus = "2"; //Folio Finalizado
 			
-			Folios.update({_id:id}, {$set : {estatus : folio.estatus}});
+			Folios.update({_id:id}, {$set : {verificacionEstatus : folio.verificacionEstatus}});
 			$state.go('root.home');
 	};
 	
 	this.getRazones = function(folioSel){
 
-		if(folioSel.estatus == 3){
+		if(folioSel.verificacionEstatus == 3){
 
 			rc.razones = [{nombre : "Realizado"},
 										{nombre : "Familiares"},
@@ -138,16 +162,20 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 										{nombre : "Domicilio deshabitado"},
 										{nombre : "Domicilio laboral"},
 										{nombre : "Domicilio bajas condiciones"},
+										{nombre : "Vecinos confirman"},
+										{nombre : "Vecinos no conocen"},
 										{nombre : "No encontrado cliente"},];
 										
 										
 										
 		  
-		}else if(folioSel.estatus == 4){
+		}else if(folioSel.verificacionEstatus == 4){
 
 			rc.razones = [{nombre : "No hay acceso"},
 										{nombre : "Zona de riesgo"}];
-										
+								
+			
+			folioSel.numeroTarjeta = "n/a";							
 			folioSel.fechavisita =  new Date();
 			folioSel.atendio = "n/a";
 			folioSel.parentesco = "n/a";
@@ -166,6 +194,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 		}else{
 			rc.razones = [{nombre : "No encontró domicilio"}];
 			
+			folioSel.numeroTarjeta = "n/a";	
 			folioSel.fechavisita =  new Date();
 			folioSel.atendio = "n/a";
 			folioSel.parentesco = "n/a";
@@ -188,8 +217,11 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					this.folio.Imagen1 = imagen;
 					console.log(this.folio);
 			}
-			else{
+			else if (op == 2){
 					this.folio.Imagen2 = imagen;
+					console.log(this.folio);
+			}else{
+					this.folio.Imagen = imagen;
 					console.log(this.folio);
 			}
 			
@@ -214,10 +246,15 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	$(document).ready( function() {
 		
 		//Para Cargar Imagenes
+		var fileInput = document.getElementById('fileInput');
+		var fileDisplayArea = document.getElementById('fileDisplayArea');
+		
 		var fileInput1 = document.getElementById('fileInput1');
 		var fileDisplayArea1 = document.getElementById('fileDisplayArea1');
+		
 		var fileInput2 = document.getElementById('fileInput2');
 		var fileDisplayArea2 = document.getElementById('fileDisplayArea2');
+		
 		
 		
 	    
@@ -295,7 +332,6 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 				
 			}
 		};
-		console.log("entre");
 		// Touch Events
 		myCanvas.addEventListener('touchstart', draw.start, false);
 		myCanvas.addEventListener('touchend', draw.end, false);
@@ -306,6 +342,32 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			evt.preventDefault();
 		},false);
 		
+		//JavaScript para agregar la imagen 0
+		fileInput.addEventListener('change', function(e) {
+			var file = fileInput.files[0];
+			var imageType = /image.*/;
+
+			if (file.type.match(imageType)) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					fileDisplayArea.innerHTML = "";
+
+					var img = new Image();
+					img.src = reader.result;
+
+					rc.AlmacenaImagen(reader.result,1);
+					this.folio.imagen0 = reader.result;
+					
+					fileDisplayArea.appendChild(img);
+				}
+				
+				reader.readAsDataURL(file);	
+			} else {
+				fileDisplayArea.innerHTML = "File not supported!";
+			}
+		});
+
 		
 		//JavaScript para agregar la imagen 1
 		fileInput1.addEventListener('change', function(e) {

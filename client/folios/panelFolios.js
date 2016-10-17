@@ -3,20 +3,21 @@ angular
 .controller("panelFoliosCtrl", panelFoliosCtrl);
 function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 
-	let rc = $reactive(this).attach($scope);
-
+	let rc = $reactive(this).attach($scope);	
+	
+	Window = rc;
 	
   this.action = true;
 	this.subscribe('folios',()=>{
-			return [{estatus :{$gte:"1",$lt:"7"}}]
+			return [{verificacionEstatus :{$gte:"1",$lt:"8"}, folioEstatus: "1"}]
 	});
 		
 	this.subscribe('logistica',()=>{
 		return [{"profile.estatus": true}]
 	});
 	
-	this.subscribe('ciudad',()=>{
-		return [{}]
+	this.subscribe('zona',()=>{
+		return [{estatus: true}]
 	});
 
   this.helpers({
@@ -24,32 +25,32 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 		  return Folios.find();
 	  },
 	  foliosPendientes : () => {
-		  return Folios.find({estatus : "1"}).fetch();
+		  return Folios.find({$or: [{verificacionEstatus : "1"}, {verificacionEstatus : "7"} ]}, { sort : {zona_id : 1 } }  ).fetch();
 	  },
 	  foliosAsignados : () => {
-		  return Folios.find({estatus : "2"}).fetch();
+		  return Folios.find({verificacionEstatus : "2"}, { sort : {nombre:1 ,verificador_id : 1 } }).fetch();
 	  },	
 	  foliosVisitados : () => {	
-		  var visitados = Folios.find({estatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
+		  var visitados = Folios.find({verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
 		  if(visitados){
-			  console.log(visitados)
-			  return Folios.find({estatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
+			  //console.log(visitados)
+			  return Folios.find({verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
 		  }
 	  },
 	  foliosVisitadosSegundaVisita : () => {
-		  return Folios.find({estatus : "3", verificacionRazon: "No encontrado cliente"}).fetch();
+		  return Folios.find({verificacionEstatus : "3", verificacionRazon: "No encontrado cliente"}).fetch();
 	  },
 		foliosNoEncontrados : () => {
-		  return Folios.find({estatus : "4"}).fetch();
+		  return Folios.find({verificacionEstatus : "4"}).fetch();
 	  },
 	  foliosNoVisitados : () => {
-		  return Folios.find({estatus : "5"}).fetch();
+		  return Folios.find({verificacionEstatus : "5"}).fetch();
 	  },
 	  foliosPorVisitar : () => {
-		  return Folios.find({estatus : "6"}).fetch();
+		  return Folios.find({verificacionEstatus : "6"}).fetch();
 	  },
-	  ciudades : () => {
-		  return Ciudad.find();
+	  zonas : () => {
+		  return Zona.find();
 	  }
   });
   
@@ -99,7 +100,7 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 		        toastr.error('Error al guardar los datos.');
 		        return;
 		  }
-			console.log(folio);
+			//console.log(folio);
 			var idTemp = folio._id;
 			delete folio._id;		
 			folio.usuarioActualizo = Meteor.userId(); 
@@ -122,8 +123,24 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 			Folios.update({_id:id}, {$set : {estatus : folio.estatus}});
 	};
 	
+	this.finalizarFolio = function(id)
+	{
+			var folio = Folios.findOne({_id:id});
+			folio.folioEstatus = "2";			//Folio Finalizado
+			Folios.update({_id:id}, {$set : {folioEstatus : folio.folioEstatus}});
+	};
+	
+	this.duplicadoFolio = function(id)
+	{
+			var folio = Folios.findOne({_id:id});
+			folio.folioEstatus = "3";			//Folio Duplicado
+			Folios.update({_id:id}, {$set : {folioEstatus : folio.folioEstatus}});
+	};
+
+	
 	this.getAnalista = function(usuario_id)
 	{		
+		//console.log(usuario_id);
 			var usuario = Meteor.users.findOne({_id:usuario_id});
 
 			if (usuario)
@@ -140,12 +157,12 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 				 
 	};
 	
-	this.getCiudad = function(ciudad_id)
+	this.getZona = function(zona_id)
 	{		
-			var ciudad = Ciudad.findOne({_id:ciudad_id});
+			var zona = Zona.findOne({_id:zona_id});
 
-			if (ciudad)
-				 return ciudad.nombre;
+			if (zona)
+				 return zona.nombre;
 				 
 	};
 

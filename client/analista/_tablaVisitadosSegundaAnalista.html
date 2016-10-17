@@ -5,8 +5,9 @@
 					<th width="10%"><div class="text-center">Folio</div></th>
 					<th width="15%"><div class="text-center">Nombre</div></th>
 					<th width="10%"><div class="text-center">Fecha </div></th>
-					<th width="10%"><div class="text-center">Ciudad</div></th>
-					<th width="15%"><div class="text-center">Analista</div></th>
+					<th width="10%"><div class="text-center">Zona</div></th>
+					<th width="10%"><div class="text-center">Razón</div></th>
+					<th width="15%"><div class="text-center">Verificador</div></th>
 					<th width="10%">
 						<div classq="text-center">
 							Acciones
@@ -19,7 +20,8 @@
 		    	<td><a ui-sref="root.verificaciondetalle({id : folio._id, op : 2})" >{{folio.folio}}</a></td>
 			    <td>{{folio.nombre}}</td>
 			    <td>{{folio.fecha.getUTCDate() +"/"+ (folio.fecha.getUTCMonth()+1) +"/"+ folio.fecha.getUTCFullYear()}} </td>
-			    <td>{{pfa.getCiudad(folio.ciudad_id)}}</td>
+			    <td>{{pfa.getZona(folio.zona_id)}}</td>
+			    <td>{{folio.verificacionRazon}}</td>
 			    <td>{{pfa.getVerificador(folio.verificador_id)}}</td>
 			    <td>
 				    <div class="text-center">
@@ -29,7 +31,10 @@
 							    <span class="sr-only">Toggle Dropdown</span>
 							  </button>
 							  <ul class="dropdown-menu text-left">
-							  	<li><a href="/asignaFolios/{{folio._id}}"><i class="fa fa-pencil"></i>Volver Asignar</a></li>
+							  	<li><a href="#" ng-click="pf.finalizarFolio(folio._id)">
+							    				<i class="fa fa-check"></i> Finalizar
+							    		</a>
+							    </li>
 							  </ul>
 							</div>
 				    </div>				    

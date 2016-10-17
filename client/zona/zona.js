@@ -1,65 +1,65 @@
 angular
   .module('verificaciones')
-  .controller('CiudadCtrl', CiudadCtrl);
+  .controller('ZonaCtrl', ZonaCtrl);
  
-function CiudadCtrl($scope, $meteor, $reactive, $state, toastr) {
+function ZonaCtrl($scope, $meteor, $reactive, $state, toastr) {
 	$reactive(this).attach($scope);
 	this.action = true;
-	this.subscribe('ciudad',()=>{
+	this.subscribe('zona',()=>{
 		return [{}]
 	});
   
   this.helpers({
-		ciudades : () => {
-		  return Ciudad.find();
+		zonas : () => {
+		  return Zona.find();
 	  }
   });
   	  
   this.nuevo = true;	  
-  this.nuevoCiudad = function()
+  this.nuevoZona = function()
   {
     this.action = true;
     this.nuevo = !this.nuevo;
-    this.ciudad = {};		
+    this.zona = {};		
   };
 	
-  this.guardar = function(ciudad,form)
+  this.guardar = function(zona,form)
 	{
 			if(form.$invalid){
 	      toastr.error('Error al guardar los datos.');
 	      return;
 	    }
 			
-			ciudad.estatus = true;
-			ciudad.usuarioInserto = Meteor.userId();
-			Ciudad.insert(ciudad);
+			zona.estatus = true;
+			zona.usuarioInserto = Meteor.userId();
+			Zona.insert(zona);
 			toastr.success('Guardado correctamente.');
-			ciudad = {};
+			zona = {};
 			$('.collapse').collapse('hide');
 			this.nuevo = true;
-			$state.go('root.ciudad');
+			$state.go('root.zona');
 			form.$setPristine();
 	    form.$setUntouched();
 	};
 	
 	this.editar = function(id)
 	{
-	    this.ciudad = Ciudad.findOne({_id:id});
+	    this.zona = Zona.findOne({_id:id});
 	    this.action = false;
 	    $('.collapse').collapse('show');
 	    this.nuevo = false;
 	};
 	
-	this.actualizar = function(ciudad,form)
+	this.actualizar = function(zona,form)
 	{
 	    if(form.$invalid){
 	        toastr.error('Error al actualizar los datos.');
 	        return;
 	    }
-		 	var idTemp = ciclo._id;
-			delete ciudad._id;		
-			ciudad.usuarioActualizo = Meteor.userId(); 
-			Ciudad.update({_id:idTemp},{$set:ciudad});
+		 	var idTemp = zona._id;
+			delete zona._id;		
+			zona.usuarioActualizo = Meteor.userId(); 
+			Zona.update({_id:idTemp},{$set:zona});
 			toastr.success('Actualizado correctamente.');
 			//console.log(ciclo);
 			$('.collapse').collapse('hide');
@@ -70,12 +70,12 @@ function CiudadCtrl($scope, $meteor, $reactive, $state, toastr) {
 		
 	this.cambiarEstatus = function(id)
 	{
-			var ciudad = Ciudad.findOne({_id:id});
-			if(ciudad.estatus == true)
-				ciudad.estatus = false;
+			var zona = Zona.findOne({_id:id});
+			if(zona.estatus == true)
+				zona.estatus = false;
 			else
-				ciudad.estatus = true;
+				zona.estatus = true;
 			
-			Ciudad.update({_id:id}, {$set : {estatus : ciudad.estatus}});
+			Zona.update({_id:id}, {$set : {estatus : zona.estatus}});
 	};	
 };

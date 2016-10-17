@@ -25,10 +25,10 @@
 							<input name="fecha" date-time format="dd/MM/yyyy" class="form-control" view="year" max-view="year" min-view="date" ng-model="fo.folio.fecha" required="" />
 						</div>
 						<div class="col-sm-4" valida>
-							<label for="ciudad">Ciudad *</label>
-							<select name="ciudad" class="form-control select2" placeholder="Seleccione" ng-model="fo.folio.ciudad_id" required="">
-								<option  value="{{ciudad._id}}" ng-repeat="ciudad in fo.ciudades">
-									{{ciudad.nombre}}
+							<label for="zona">Zona *</label>
+							<select name="zona" class="form-control select2" placeholder="Seleccione" ng-model="fo.folio.zona_id" required="">
+								<option  value="{{zona._id}}" ng-repeat="zona in fo.zonas">
+									{{zona.nombre}}
 								</option>
 							</select>
 						</div>

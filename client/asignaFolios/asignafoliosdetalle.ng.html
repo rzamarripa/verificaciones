@@ -18,10 +18,10 @@
 				    	<span class="form-control" disabled="true">{{afd.folio.fecha | date : "dd-MM-yyyy"}}</span>
 			    	</div>			
 						<div class="col-sm-4">
-							<label for="ciudad">Ciudad</label>
-							<select name="ciudad" class="form-control select2" placeholder="Seleccione" ng-model="afd.folio.ciudad_id" disabled="true">
-								<option  value="{{ciudad._id}}" ng-repeat="ciudad in afd.ciudades">
-									{{ciudad.nombre}}
+							<label for="zona">Zona</label>
+							<select name="zona" class="form-control select2" placeholder="Seleccione" ng-model="afd.folio.zona_id" disabled="true">
+								<option  value="{{zona._id}}" ng-repeat="zona in afd.zonas">
+									{{zona.nombre}}
 								</option>
 							</select>
 						</div>
@@ -42,10 +42,6 @@
 			    	<div class="col-sm-4" valida>					    
 				    	<label>Teléfono cliente *</label>
 				    	<input name="telefono" type="text" class="form-control" placeholder="Teléfono" ng-model="afd.folio.telefono" required="">
-			    	</div>
-			    	<div class="col-sm-4" valida>					    
-				    	<label>Zona *</label>
-				    	<input name="zona" type="text" class="form-control" placeholder="Zona" ng-model="afd.folio.zona" required="">
 			    	</div>
 			    	<div class="col-sm-4" valida>
 				    	<label >Verificador *</label>

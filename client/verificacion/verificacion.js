@@ -7,10 +7,11 @@ function verificacionCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 
   this.action = true;
 	this.subscribe('folios',()=>{
-			return [{estatus: "2",verificador_id: Meteor.user() != undefined ? Meteor.user()._id : ""}]
-	});//Estatus 2 :  Asignado
+			return [{folioEstatus: "1", verificacionEstatus :{$gte:"2",$lt:"6"}, verificador_id: Meteor.user() != undefined ? Meteor.user()._id : ""}]
+	});
+	//Estatus 2 :  Asignado
 
-	this.subscribe('ciudad',()=>{
+	this.subscribe('zona',()=>{
 		return [{estatus: true}]
 	});
 
@@ -18,17 +19,29 @@ function verificacionCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 	  folios : () => {
 		  return Folios.find();
 	  },
-	  ciudades : () => {
-		  return Ciudad.find();
+	  PorVerificar : () => {
+		  return Folios.find({verificacionEstatus : "2"}, { sort : {zona_id : 1 } } ).fetch();
+	  },
+	  Verificados : () => {
+		  var verificados = Folios.find({folioEstatus: "1", verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
+		  if(verificados){
+			  return Folios.find({folioEstatus: "1", verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
+		  }
+	  },
+	  SegundaVisita : () => {
+		  return Folios.find({$or: [ {verificacionRazon: "No encontrado cliente" }, { verificacionRazon: "No encontró domicilio" }]}, { sort : {zona_id : 1 } }).fetch();
+	  },
+	  zonas : () => {
+		  return Zona.find();
 	  }
   });
   
-  this.getCiudad = function(ciudad_id)
+ this.getZona = function(zona_id)
 	{		
-			var ciudad = Ciudad.findOne({_id:ciudad_id});
+			var zona = Zona.findOne({_id:zona_id});
 
-			if (ciudad)
-				 return ciudad.nombre;
+			if (zona)
+				 return zona.nombre;
 				 
 	};
   

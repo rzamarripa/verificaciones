@@ -115,6 +115,16 @@ angular.module('verificaciones').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.buscarnombre', {
+      url: '/buscarnombre',
+      templateUrl: 'client/folios/buscarNombre.ng.html',
+      controller: 'buscarNombreCtrl as bn',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
     .state('root.importarfolios', {
       url: '/importarFolios',
       templateUrl: 'client/importarFolios/importarFolios.ng.html',
@@ -147,7 +157,7 @@ angular.module('verificaciones').config(['$injector', function ($injector) {
     })
     .state('root.verificacion', {
       url: '/verificacion/',
-      templateUrl: 'client/verificacion/verificacion.ng.html',
+      templateUrl: 'client/verificacion/panelVerificacion.ng.html',
       controller: 'verificacionCtrl as ver',
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
@@ -156,7 +166,7 @@ angular.module('verificaciones').config(['$injector', function ($injector) {
 	    }
     })
     .state('root.verificaciondetalle', {
-      url: '/verificacion/:id/:op',
+      url: '/verificacion/:id/:op/:tip',
       templateUrl: 'client/verificacion/verificaciondetalle.ng.html',
       controller: 'verificacionDetalleCtrl as vd',
       resolve: {
@@ -185,10 +195,20 @@ angular.module('verificaciones').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
-    .state('root.ciudad', {
-      url: '/ciudad/',
-      templateUrl: 'client/ciudad/ciudad.ng.html',
-      controller: 'CiudadCtrl as ciu',
+    .state('root.zona', {
+      url: '/zona/',
+      templateUrl: 'client/zona/zona.ng.html',
+      controller: 'ZonaCtrl as zon',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.direccion', {
+      url: '/direccion/',
+      templateUrl: 'client/direccion/direccion.ng.html',
+      controller: 'DireccionCtrl as dir',
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
 	        return $meteor.requireUser();

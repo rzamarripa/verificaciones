@@ -14,7 +14,7 @@ function FoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 		return [{"profile.estatus": true, roles: ["Analista"]}]
 	});
 	
-	this.subscribe('ciudad',()=>{
+	this.subscribe('zona',()=>{
 		return [{estatus: true}]
 	});
 
@@ -25,8 +25,8 @@ function FoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 	  usuarios: ()=> {
 		  return Meteor.users.find({roles : ["Analista"]});
 	  },
-	  ciudades : () => {
-		  return Ciudad.find();
+	  zonas : () => {
+		  return Zona.find();
 	  }
   });
   
@@ -103,13 +103,12 @@ function FoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 				 return usuario.profile.nombre;
 				 
 	};
-	this.getCiudad = function(ciudad_id)
+	this.getZona = function(zona_id)
 	{		
-			var ciudad = Ciudad.findOne({_id:ciudad_id});
+			var zona = Zona.findOne({_id:zona_id});
 
-			if (ciudad)
-				 return ciudad.nombre;
+			if (zona)
+				 return zona.nombre;
 				 
 	};
-
 };
