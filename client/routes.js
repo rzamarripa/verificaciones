@@ -205,10 +205,10 @@ angular.module('verificaciones').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
-    .state('root.direccion', {
-      url: '/direccion/',
-      templateUrl: 'client/direccion/direccion.ng.html',
-      controller: 'DireccionCtrl as dir',
+    .state('root.direccionverificadores', {
+      url: '/direccionverificadores/',
+      templateUrl: 'client/direccion/direccionverificadores.ng.html',
+      controller: 'DireccionVerificadoresCtrl as dv',
       resolve: {
 	      "currentUser": ["$meteor", function($meteor){
 	        return $meteor.requireUser();

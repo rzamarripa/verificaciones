@@ -108,9 +108,12 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 		  }
 		  
 		  var tip = $stateParams.tip;
-		   
-		  if (folio.fechavisita)
+		  
+		  console.log(this.fechavisita);
+		  console.log("FechaVisita: ",folio.fechavisita);
+		  if (!folio.fechavisita)
 		  	 folio.fechavisita = this.fechavisita;
+		  
 		  
 		  if (tip == 2)
 		   	 folio.verificoAnalista = Meteor.userId();
@@ -215,14 +218,14 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			if (op == 1)
 			{
 					this.folio.Imagen1 = imagen;
-					console.log(this.folio);
+					//console.log(this.folio);
 			}
 			else if (op == 2){
 					this.folio.Imagen2 = imagen;
-					console.log(this.folio);
+					//console.log(this.folio);
 			}else{
 					this.folio.Imagen = imagen;
-					console.log(this.folio);
+					//console.log(this.folio);
 			}
 			
 			
@@ -360,6 +363,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					this.folio.imagen0 = reader.result;
 					
 					fileDisplayArea.appendChild(img);
+					
 				}
 				
 				reader.readAsDataURL(file);	
@@ -387,6 +391,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					//this.folio.imagen1 = reader.result;
 					
 					fileDisplayArea1.appendChild(img);
+					//console.log(fileDisplayArea1);
 				}
 				
 				reader.readAsDataURL(file);	
