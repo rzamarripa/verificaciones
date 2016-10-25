@@ -13,10 +13,14 @@
 			    	<label>Fecha</label>
 			    	<input name="fecha" type="date" format="dd/MM/yyyy" class="form-control" placeholder="Fecha" ng-model="vd.folio.fecha" disabled="true">
 		    	</div>	
-		    	<div class="col-sm-4">					    
-			    	<label>Zona</label>
-			    	<input name="zona" type="text" class="form-control" placeholder="Zona" ng-model="vd.folio.zona_id" disabled="">
-		    	</div>		    				    	    
+		    	<div class="col-sm-4">
+						<label for="zona">Zona</label>
+						<select name="zona" class="form-control select2" placeholder="Seleccione" ng-model="vd.folio.zona_id" disabled="true">
+								<option  value="{{zona._id}}" ng-repeat="zona in vd.zonas">
+									{{zona.nombre}}
+								</option>
+							</select>
+					</div>			    				    	    
 		    </div>
 			</div>
 			<h4>Datos del Cliente</h4>

@@ -126,7 +126,21 @@ A LA BARRA LATERAL
     <li data-ui-sref-active="active">
       <a ui-sref="root.direccionverificadores" tilte="Verificaciones" ng-if="currentUser.roles[0] == 'Director'">
         <i class="fa fa-lg fa-fw fa-folder-o"></i>
-        <span class="menu-item-parent">Dirección</span>
+        <span class="menu-item-parent">Reporte por Verificadores</span>
+      </a>
+    </li>
+    
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.direccionanalistas" tilte="Verificaciones" ng-if="currentUser.roles[0] == 'Director'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Reporte por Analista</span>
+      </a>
+    </li>
+    
+     <li data-ui-sref-active="active">
+      <a ui-sref="root.direccionfolios" tilte="Verificaciones" ng-if="currentUser.roles[0] == 'Director'">
+        <i class="fa fa-lg fa-fw fa-folder-o"></i>
+        <span class="menu-item-parent">Reporte por Folios</span>
       </a>
     </li>
 

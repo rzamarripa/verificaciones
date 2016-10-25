@@ -1,7 +1,7 @@
 angular
 .module("verificaciones")
-.controller("DireccionVerificadoresCtrl", DireccionVerificadoresCtrl);
-function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr) {
+.controller("DireccionFoliosCtrl", DireccionFoliosCtrl);
+function DireccionFoliosCtrl($scope, $meteor, $reactive,  $state, toastr) {
 	
 	let rc = $reactive(this).attach($scope);
 	
@@ -43,7 +43,7 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 			  
 			  return verificadoresMR;
 		  }
-	  },	  
+	  },
 	  foliosVisitados : () => {
 		  return Folios.find({verificacionEstatus: "3"}).count();
 	  },
@@ -103,8 +103,7 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 		  
 		  data = [];
 		  
-		  if(verf.ready()){				
-				
+		  if(verf.ready()){
 				data.push({
 				  name: "Visitados",
 				  data: rc.cantidadFoliosVisitadosPorVerificador
@@ -119,6 +118,7 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 					name: "No Visitados",
 					data: rc.cantidadFoliosNoVisitadosPorVerificador
 				});
+				
 			}
 			$('#container').highcharts( {
 			    chart: { type: 'column' },
@@ -171,24 +171,6 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 	  }else{
 		  return foto;
 	  }
-  };
-    
-  //Cantidad de folios Visitados por Verificador
-  this.getCantidadVisitadosVerificador = function(id){
-	  return Folios.find({verificacionEstatus: "3",
-		  									verificador_id : id }).count();
-  };
-  
-  //Cantidad de folios No Encontrados por Verificador
-  this.getCantidadNoEncontradosVerificador = function(id){
-	  return Folios.find({verificacionEstatus: "4",
-		  									verificador_id : id }).count();
-  };
-  
-  //Cantidad de folios No Visitados por Verificador
-  this.getCantidadNoVisitadosVerificador = function(id){
-	  return Folios.find({verificacionEstatus: "5",
-		  									verificador_id : id }).count();
   };
 
 	//Buscar prospectos entre fechas

@@ -6,6 +6,7 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 	let rc = $reactive(this).attach($scope);	
 	
 	Window = rc;
+	this.buscar = {}
 	
   this.action = true;
 	this.subscribe('folios',()=>{
@@ -28,12 +29,16 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 		  return Folios.find({$or: [{verificacionEstatus : "1"}, {verificacionEstatus : "7"} ]}, { sort : {zona_id : 1 } }  ).fetch();
 	  },
 	  foliosAsignados : () => {
-		  return Folios.find({verificacionEstatus : "2"}, { sort : {nombre:1 ,verificador_id : 1 } }).fetch();
+		  	if (this.getReactively('buscar.verificador_id') == undefined)
+					 return Folios.find({verificacionEstatus : "2"}, { sort : {nombre:1 ,verificador_id : 1 } }).fetch();
+				else
+					 return Folios.find({$and: [{verificacionEstatus : "2"}, 
+		   													{verificador_id: this.getReactively('buscar.verificador_id')}] 
+		  									 			},{ sort : {nombre:1 ,verificador_id : 1 } }).fetch();
 	  },	
 	  foliosVisitados : () => {	
 		  var visitados = Folios.find({verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
 		  if(visitados){
-			  //console.log(visitados)
 			  return Folios.find({verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
 		  }
 	  },
@@ -51,7 +56,10 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 	  },
 	  zonas : () => {
 		  return Zona.find();
-	  }
+	  },
+	  verificadores : () => {
+		  return Meteor.users.find({roles: ["Verificador"]});
+	  },
   });
   
   
@@ -165,5 +173,12 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 				 return zona.nombre;
 				 
 	};
+	
+	this.inicializar = function()
+	{		
+			this.buscar = {};
+						 
+	};
+	
 
 };

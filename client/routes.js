@@ -215,4 +215,24 @@ angular.module('verificaciones').config(['$injector', function ($injector) {
 	      }]
 	    }
     })
+    .state('root.direccionanalistas', {
+      url: '/direccionanalistas/',
+      templateUrl: 'client/direccion/direccionanalistas.ng.html',
+      controller: 'DireccionAnalistasCtrl as da',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
+    .state('root.direccionfolios', {
+      url: '/direccionfolios/',
+      templateUrl: 'client/direccion/direccionfolios.ng.html',
+      controller: 'DireccionFoliosCtrl as df',
+      resolve: {
+	      "currentUser": ["$meteor", function($meteor){
+	        return $meteor.requireUser();
+	      }]
+	    }
+    })
 }]);     

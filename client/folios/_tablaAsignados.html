@@ -6,6 +6,17 @@
 					<label for="buscar" class="glyphicon glyphicon-search" rel="tooltip" title="" data-original-title="Buscar"></label>
 	      </div>
 		</div>
+		<div class="col-sm-4">
+				<select name="ciclo" class="form-control select2" placeholder="Seleccione" ng-model="pf.buscar.verificador_id">
+						<option  value="{{verificador._id}}" ng-repeat="verificador in pf.verificadores">
+							{{verificador.profile.nombre}}
+						</option>
+				</select>
+		</div>
+		<div class="col-sm-4">
+				<input type="button" ng-click="pf.inicializar()" value="Todos" class="btn btn-primary" />
+
+		</div>
 	</div>
 </div>
 <!-- Tabla de Pendientes -->

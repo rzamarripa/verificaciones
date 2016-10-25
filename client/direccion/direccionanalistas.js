@@ -1,7 +1,7 @@
 angular
 .module("verificaciones")
-.controller("DireccionVerificadoresCtrl", DireccionVerificadoresCtrl);
-function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr) {
+.controller("DireccionAnalistasCtrl", DireccionAnalistasCtrl);
+function DireccionAnalistasCtrl($scope, $meteor, $reactive,  $state, toastr) {
 	
 	let rc = $reactive(this).attach($scope);
 	
@@ -11,8 +11,8 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
   //this.buscar.fechaInicial = new Date();
   //this.buscar.fechaFinal = new Date();
 
-  this.verificador_id = "";
-  this.verificadores_id = [];
+  this.analista_id = "";
+  this.analistas_id = [];
   this.fechaInicial = new Date();
   this.fechaFinal = new Date();
   
@@ -20,7 +20,7 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 
 		
 	let verf = this.subscribe('usuarios',()=>{
-		return [{"profile.estatus": true, roles: ["Verificador"]}]
+		return [{"profile.estatus": true, roles: ["Analista"]}]
 	});
 	
 	this.subscribe('folios',()=>{
@@ -32,28 +32,28 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 		folios : () => {
 		  	return Folios.find();
 	  },
-		verificadores : () => {
+		analistas : () => {
 		  if(Meteor.user()){
-			  var usuarios = Meteor.users.find({roles : ["Verificador"]}).fetch();
-			  var verificadoresMR = [];
+			  var usuarios = Meteor.users.find({roles : ["Analista"]}).fetch();
+			  var analistasMR = [];
 			  _.each(usuarios, function(usuario){
-					  verificadoresMR.push(usuario);
+					  analistasMR.push(usuario);
 			  });
-			  rc.verificadores_id = _.pluck(verificadoresMR, "_id");
+			  rc.analistas_id = _.pluck(analistasMR, "_id");
 			  
-			  return verificadoresMR;
+			  return analistasMR;
 		  }
-	  },	  
+	  },
 	  foliosVisitados : () => {
 		  return Folios.find({verificacionEstatus: "3"}).count();
 	  },
-	  cantidadFoliosVisitadosPorVerificador : () => {
+	  cantidadFoliosVisitadosPorAnalista : () => {
 		  
 		  var arreglo = [];
 		  if(verf.ready()){
-			  _.each(this.verificadores, function(verificador){
+			  _.each(this.analistas, function(analista){
 				  arreglo.push(Folios.find({verificacionEstatus: "3",
-					  												verificador_id : verificador._id, 
+					  												analista_id : analista._id, 
 					  												fechavisita: {$gte: rc.getReactively("fechaInicial"),$lt: rc.getReactively("fechaFinal")}}).count());
 			  });
 		  }
@@ -62,13 +62,13 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 	  foliosNoEncontrados : () => {
 		  return Folios.find({verificacionEstatus: "4"}).count();
 	  },
-	  cantidadFoliosNoEncontradosPorVerificador : () => {
+	  cantidadFoliosNoEncontradosPorAnalista : () => {
 		  
 		  var arreglo = [];
 		  if(verf.ready()){
-			  _.each(this.verificadores, function(verificador){
+			  _.each(this.analistas, function(analista){
 				  arreglo.push(Folios.find({verificacionEstatus: "4",
-					  												verificador_id : verificador._id, 
+					  												analista_id : analista._id, 
 					  												fechavisita: {$gte: rc.getReactively("fechaInicial"),$lt: rc.getReactively("fechaFinal")}}).count());
 			  });
 		  }
@@ -77,58 +77,58 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 	  foliosNoVisitados : () => {
 		  return Folios.find({verificacionEstatus: "5"}).count();
 	  },
-	  cantidadFoliosNoVisitadosPorVerificador : () => {
+	  cantidadFoliosNoVisitadosPorAnalista : () => {
 		  
 		  var arreglo = [];
 		  if(verf.ready()){
-			  _.each(this.verificadores, function(verificador){
+			  _.each(this.analistas, function(analista){
 				  arreglo.push(Folios.find({verificacionEstatus: "5",
-					  												verificador_id : verificador._id, 
+					  												analista_id : analista._id, 
 					  												fechavisita: {$gte: rc.getReactively("fechaInicial"),$lt: rc.getReactively("fechaFinal")}}).count());
 			  });
 		  }
 		  return arreglo;
 	  },
-	  verificadoresNombres : () => {
-		  verificadoresNombre = [];
+	  analistasNombres : () => {
+		  analistasNombre = [];
 		  if(verf.ready()){
-			  _.each(this.verificadores, function(verificador){
-				  var nombre = verificador.profile.nombre + " " + verificador.profile.apPaterno + " " + verificador.profile.apMaterno;
-				  verificadoresNombre.push(nombre);
+			  _.each(this.analistas, function(analista){
+				  var nombre = analista.profile.nombre + " " + analista.profile.apPaterno + " " + analista.profile.apMaterno;
+				  analistasNombre.push(nombre);
 			  });
 		  }
-		  return verificadoresNombre;
+		  return analistasNombre;
 	  },
-	  graficaVerificadores : () => {
+	  graficaAnalistas : () => {
 		  
 		  data = [];
 		  
-		  if(verf.ready()){				
-				
+		  if(verf.ready()){
 				data.push({
 				  name: "Visitados",
-				  data: rc.cantidadFoliosVisitadosPorVerificador
+				  data: rc.cantidadFoliosVisitadosPorAnalista
 				});
 				
 				data.push({
 					name: "No Encontrados",
-					data: rc.cantidadFoliosNoEncontradosPorVerificador
+					data: rc.cantidadFoliosNoEncontradosPorAnalista
 				});
 
 				data.push({
 					name: "No Visitados",
-					data: rc.cantidadFoliosNoVisitadosPorVerificador
+					data: rc.cantidadFoliosNoVisitadosPorAnalista
 				});
+
 			}
 			$('#container').highcharts( {
 			    chart: { type: 'column' },
-			    title: { text: 'Resumen de Folios Por Verificador' },
+			    title: { text: 'Resumen de Folios Por Analista' },
 			    subtitle: {
 		        text: 'Del ' + moment(this.getReactively("fechaInicial")).format('LL') + 
 		        			' al ' + moment(this.getReactively("fechaFinal")).format('LL')
 			    },
 			    xAxis: {
-		        categories: rc.verificadoresNombres,
+		        categories: rc.analistasNombres,
 		        crosshair: true
 			    },
 			    yAxis: {
@@ -158,7 +158,7 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 	  }
 	});
 	
-	//Validar si tiene foto el vendedor
+	//Validar si tiene foto 
   this.tieneFoto = function(sexo, foto){
 	  if(foto === undefined){
 		  if(sexo === "masculino")
@@ -172,23 +172,23 @@ function DireccionVerificadoresCtrl($scope, $meteor, $reactive,  $state, toastr)
 		  return foto;
 	  }
   };
-    
-  //Cantidad de folios Visitados por Verificador
-  this.getCantidadVisitadosVerificador = function(id){
+  
+  //Cantidad de folios Visitados por Analista
+  this.getCantidadVisitadosAnalista = function(id){
 	  return Folios.find({verificacionEstatus: "3",
-		  									verificador_id : id }).count();
+		  									analista_id : id }).count();
   };
   
-  //Cantidad de folios No Encontrados por Verificador
-  this.getCantidadNoEncontradosVerificador = function(id){
+  //Cantidad de folios No Encontrados por Analista
+  this.getCantidadNoEncontradosAnalista = function(id){
 	  return Folios.find({verificacionEstatus: "4",
-		  									verificador_id : id }).count();
+		  									analista_id : id }).count();
   };
   
-  //Cantidad de folios No Visitados por Verificador
-  this.getCantidadNoVisitadosVerificador = function(id){
+  //Cantidad de folios No Visitados por Analista
+  this.getCantidadNoVisitadosAnalista = function(id){
 	  return Folios.find({verificacionEstatus: "5",
-		  									verificador_id : id }).count();
+		  									analista_id : id }).count();
   };
 
 	//Buscar prospectos entre fechas
