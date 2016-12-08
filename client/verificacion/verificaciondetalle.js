@@ -47,18 +47,18 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	
 	
   this.guardarPizarron = function(imagen){
-	  var pizarra = Pizarrones.findOne();
-	  //console.log('me estoy guardando')
-	  if(pizarra){
-		  Pizarrones.update(pizarra._id, {$set:{imagen:imagen}});
-		  
-		}else{
-			Pizarrones.insert({imagen:imagen,grupo_id:this.grupo});
+	  var folio = Folios.findOne();
+	  console.log(folio);
+	  if(folio){
+		  Folios.update({_id:$stateParams.id}, {$set:{firma:imagen}});
 		}
+		/*else{
+			Pizarrones.insert({imagen:imagen,grupo_id:this.grupo});
+		}*/
   }
 	
 	this.autorun(() => {
-   	var imagsrc = this.getReactively('pizarrones');
+   	var imagsrc = this.getReactively('folio.firma');
    	var image = new Image();
    	//console.log(imagsrc);
    	if(imagsrc && imagsrc.imagen ){
@@ -224,7 +224,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					this.folio.Imagen2 = imagen;
 					//console.log(this.folio);
 			}else{
-					this.folio.Imagen = imagen;
+					this.folio.tarjetaImagen = imagen;
 					//console.log(this.folio);
 			}
 			
@@ -294,7 +294,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 				}
 			})
 			.mouseup(function(e){
-				//rc.guardarPizarron(myCanvas.toDataURL("image/png"));
+				rc.guardarPizarron(myCanvas.toDataURL("image/png"));
 				rc.isDown = false;
 				ctx.closePath();
 
@@ -387,7 +387,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					var img = new Image();
 					img.src = reader.result;
 
-					rc.AlmacenaImagen(reader.result,1);
+					rc.AlmacenaImagen(reader.result,2);
 					//this.folio.imagen1 = reader.result;
 					
 					fileDisplayArea1.appendChild(img);
@@ -400,7 +400,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			}
 		});
 		
-			//JavaScript para agregar la imagen 2
+			//JavaScript para agregar la imagen 2 Tarjeta
 		fileInput2.addEventListener('change', function(e) {
 			var file = fileInput2.files[0];
 			var imageType = /image.*/;
@@ -414,7 +414,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					var img = new Image();
 					img.src = reader.result;
 					
-					rc.AlmacenaImagen(reader.result,2);
+					rc.AlmacenaImagen(reader.result,3);
 					//this.folio.imagen2 = reader.result;
 					
 					fileDisplayArea2.appendChild(img);

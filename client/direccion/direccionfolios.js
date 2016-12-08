@@ -14,7 +14,9 @@ function DireccionFoliosCtrl($scope, $meteor, $reactive,  $state, toastr) {
   this.verificador_id = "";
   this.verificadores_id = [];
   this.fechaInicial = new Date();
+	this.fechaInicial.setHours(0,0,0,0);
   this.fechaFinal = new Date();
+  this.fechaFinal.setHours(23,0,0,0);
   
   //moment.locale("es");
 

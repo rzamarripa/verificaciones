@@ -14,7 +14,9 @@ function DireccionAnalistasCtrl($scope, $meteor, $reactive,  $state, toastr) {
   this.analista_id = "";
   this.analistas_id = [];
   this.fechaInicial = new Date();
+  this.fechaInicial.setHours(0,0,0,0);
   this.fechaFinal = new Date();
+  this.fechaFinal.setHours(23,0,0,0);
   
   //moment.locale("es");
 
