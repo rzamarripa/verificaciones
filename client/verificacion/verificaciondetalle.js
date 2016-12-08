@@ -11,8 +11,12 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	this.fecha = {};
 	this.fechavisita = new Date();
 	
+/*
 	var myCanvas = document.getElementById("myCanvas");
 	ctx = myCanvas.getContext("2d");
+*/
+
+	
 
 	this.subscribe('zona',()=>{
 		return [{estatus: true}]
@@ -259,17 +263,31 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 		var fileDisplayArea2 = document.getElementById('fileDisplayArea2');
 		
 		
-		
+		var canvas=document.getElementById("myCanvas");
+    
+
+  var signaturePad = null;
+
+
+  signaturePad = new SignaturePad(canvas);
+  signaturePad.minWidth = 1;
+  signaturePad.maxWidth = 2;
+  signaturePad.penColor = "rgb(4, 4, 4)";
 	    
     // Fill Window Width and Height
+/*
     myCanvas.width = window.innerWidth;
 		myCanvas.height = window.innerHeight;
+*/
 		
 		// Set Background Color
+/*
     ctx.fillStyle="#fff";
     ctx.fillRect(0,0,myCanvas.width,myCanvas.height);
+*/
 		
 		// Mouse Event Handlers
+/*
 		if(myCanvas){
 			rc.isDown = false;
 			var canvasX, canvasY;
@@ -301,8 +319,10 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 				
 			});
 		}
+*/
 		
 		// Touch Events Handlers
+/*
 		draw = {
 			started: false,
 			start: function(evt) {
@@ -335,15 +355,20 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 				
 			}
 		};
+*/
 		// Touch Events
+/*
 		myCanvas.addEventListener('touchstart', draw.start, false);
 		myCanvas.addEventListener('touchend', draw.end, false);
 		myCanvas.addEventListener('touchmove', draw.move, false);
 		
+*/
 		// Disable Page Move
+/*
 		document.body.addEventListener('touchmove',function(evt){
 			evt.preventDefault();
 		},false);
+*/
 		
 		//JavaScript para agregar la imagen 0
 		fileInput.addEventListener('change', function(e) {
