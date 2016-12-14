@@ -23,6 +23,9 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 	  folios : () => {
 		  return Folios.find();
 	  },
+	  foliosPorLlamar : () => {
+		  return Folios.find({verificacionEstatus : "2"}).fetch();
+	  },	  
 	  foliosVisitados : () => {	
 		  var visitados = Folios.find({verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
 		  if(visitados){
