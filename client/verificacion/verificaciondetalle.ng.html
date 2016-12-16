@@ -1,11 +1,4 @@
 <div class="row">
-	<div class="col-sm-8 col-sm-offset-2">
-		<canvas id="myCanvas" style="width: 600px; height: 300px; border:1px solid #000000;">
-				Sorry, your browser does not support HTML5 canvas technology.
-			</canvas>	
-	</div>
-</div>
-<div class="row">
 	<div class="col-sm-12">
 		<form name="form" class="form-horizontal" role="form" novalidate >		
 			<h4>Datos del Folio</h4>
@@ -271,7 +264,7 @@
 							<input type="file" id="fileInput2">
 							<div id="fileDisplayArea2" style="display: none;" ></div>
 						</div>
-						<img class="thumbnail" src="{{vd.folio.Imagen2}}" width="200" height="200"/>
+						<img class="thumbnail" src="{{vd.folio.Imagen2}}" width="200" height="200" onClick='view(vd.folio.Imagen2)'/>
 					</div>
 					<div class="col-sm-4" ng-show ="!vd.folio.plan">
 						<label>Tarjeta</label>
@@ -280,14 +273,20 @@
 							<input type="file" id="fileInput">
 							<div id="fileDisplayArea" style="display: none;" ></div>
 						</div>
-						<img class="thumbnail" src="{{vd.folio.Imagen}}" width="200" height="200"/>
+						<img class="thumbnail" src="{{vd.folio.tarjetaImagen}}" width="200" height="200"/>
 					</div>
 				</div>
 			</div>
-			
-			
-			
-			
+			<div class="row">
+				<a class="btn btn-primary" role="button" ng-click="vd.resetCanvas()">
+				  Limpiar Firma
+				</a>
+				<div class="col-sm-8 col-sm-offset-2">
+					<canvas id="myCanvas" style="width: 600px; height: 300px; border:1px solid #000000;">
+							Sorry, your browser does not support HTML5 canvas technology.
+						</canvas>	
+				</div>
+			</div>			
 			<div class="row">
 				<div class="col-sm-12">
 					<input type="submit" ng-click="vd.actualizar(vd.folio,form)" value="Actualizar" class="btn btn-primary" ng-show="vd.op==1" valida-form formulario="form"/>	
@@ -297,3 +296,12 @@
 		</form>
 	</div>
 </div>
+
+
+<script language="JavaScript">
+   function view(img) {
+	    console.log(img);
+      imgsrc = img;
+      viewwin = window.open(imgsrc,'viewwin', 'width=600,height=300');    
+   }
+</script>

@@ -43,6 +43,7 @@ function asignaFoliosDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			folio.usuarioActualizo = Meteor.userId(); 
 			
 			folio.verificacionRazon = "";
+			//folio.EsLlamado = "1";
 			//console.log(folio);
 			
 			if (folio.estatusPorVisitar == true)

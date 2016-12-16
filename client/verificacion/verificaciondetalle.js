@@ -158,6 +158,13 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			$state.go('root.home');
 	};
 	
+	this.resetCanvas = function()
+	{
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+	};
+	
 	this.getRazones = function(folioSel){
 
 		if(folioSel.verificacionEstatus == 3){
@@ -379,7 +386,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 				var reader = new FileReader();
 
 				reader.onload = function(e) {
-					fileDisplayArea.innerHTML = "";
+					fileDisplayArea1.innerHTML = "";
 
 					var img = new Image();
 					img.src = reader.result;
@@ -387,13 +394,13 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					rc.AlmacenaImagen(reader.result,1);
 					this.folio.imagen0 = reader.result;
 					
-					fileDisplayArea.appendChild(img);
+					fileDisplayArea1.appendChild(img);
 					
 				}
 				
 				reader.readAsDataURL(file);	
 			} else {
-				fileDisplayArea.innerHTML = "File not supported!";
+				fileDisplayArea1.innerHTML = "File not supported!";
 			}
 		});
 
@@ -407,7 +414,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 				var reader = new FileReader();
 
 				reader.onload = function(e) {
-					fileDisplayArea1.innerHTML = "";
+					fileDisplayArea2.innerHTML = "";
 
 					var img = new Image();
 					img.src = reader.result;
@@ -415,13 +422,13 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					rc.AlmacenaImagen(reader.result,2);
 					//this.folio.imagen1 = reader.result;
 					
-					fileDisplayArea1.appendChild(img);
+					fileDisplayArea2.appendChild(img);
 					//console.log(fileDisplayArea1);
 				}
 				
 				reader.readAsDataURL(file);	
 			} else {
-				fileDisplayArea1.innerHTML = "File not supported!";
+				fileDisplayArea2.innerHTML = "File not supported!";
 			}
 		});
 		
@@ -434,7 +441,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 				var reader = new FileReader();
 
 				reader.onload = function(e) {
-					fileDisplayArea2.innerHTML = "";
+					fileDisplayArea.innerHTML = "";
 
 					var img = new Image();
 					img.src = reader.result;
@@ -442,12 +449,12 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					rc.AlmacenaImagen(reader.result,3);
 					//this.folio.imagen2 = reader.result;
 					
-					fileDisplayArea2.appendChild(img);
+					fileDisplayArea.appendChild(img);
 				}
 				
 				reader.readAsDataURL(file);	
 			} else {
-				fileDisplayArea2.innerHTML = "File not supported!";
+				fileDisplayArea.innerHTML = "File not supported!";
 			}
 		});
 

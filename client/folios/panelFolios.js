@@ -9,7 +9,7 @@ function panelFoliosCtrl($scope, $meteor, $reactive,  $state, $stateParams, toas
 	this.buscar = {}
 	
   this.action = true;
-	this.subscribe('folios',()=>{
+	this.subscribe('foliosPanel',()=>{
 			return [{verificacionEstatus :{$gte:"1",$lt:"8"}, folioEstatus: "1"}]
 	});
 		
