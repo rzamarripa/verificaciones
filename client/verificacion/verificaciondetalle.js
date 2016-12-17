@@ -9,6 +9,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	
 	
 	this.fecha = {};
+	this.imagenSeleccionada = "";
 	this.fechavisita = new Date();
 	
 /*
@@ -110,11 +111,11 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 		        toastr.error('Error al guardar los datos.');
 		        return;
 		  }
-		  
+		  //tipo
 		  var tip = $stateParams.tip;
 		  
-		  console.log(this.fechavisita);
-		  console.log("FechaVisita: ",folio.fechavisita);
+		  //console.log(this.fechavisita);
+		  //console.log("FechaVisita: ",folio.fechavisita);
 		  if (!folio.fechavisita)
 		  	 folio.fechavisita = this.fechavisita;
 		  
@@ -126,12 +127,22 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			delete folio._id;		
 			
 			
-			Folios.update({_id:idTemp},{$set:folio});
-			toastr.success('Actualizado correctamente.');
-			$('.collapse').collapse('hide');
-			this.nuevo = true;
-			form.$setPristine();
-	    form.$setUntouched();
+			Folios.update({_id:idTemp},{$set:folio}, 
+																			function(error,result){
+																				if (error){
+																					  console.log("Error:",error);
+																				}	  
+																				if (result)
+																				{
+																						toastr.success('Actualizado correctamente.');
+																						$('.collapse').collapse('hide');
+																						this.nuevo = true;
+																						form.$setPristine();
+																				    form.$setUntouched();
+																				}	 
+																			}
+																	);
+			
 	    
 	   
 	    
@@ -157,6 +168,14 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			Folios.update({_id:id}, {$set : {verificacionEstatus : folio.verificacionEstatus}});
 			$state.go('root.home');
 	};
+	
+	this.mostrarImagen = function(imagen)
+	{
+			console.log(imagen);
+			this.imagenSeleccionada = imagen;
+			$('#myModal').modal('show')
+	};
+
 	
 	this.resetCanvas = function()
 	{
@@ -238,8 +257,6 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					this.folio.tarjetaImagen = imagen;
 					//console.log(this.folio);
 			}
-			
-			
 		
 	}
 	
@@ -378,8 +395,8 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 */
 		
 		//JavaScript para agregar la imagen 0
-		fileInput.addEventListener('change', function(e) {
-			var file = fileInput.files[0];
+		fileInput1.addEventListener('change', function(e) {
+			var file = fileInput1.files[0];
 			var imageType = /image.*/;
 
 			if (file.type.match(imageType)) {
@@ -392,7 +409,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					img.src = reader.result;
 
 					rc.AlmacenaImagen(reader.result,1);
-					this.folio.imagen0 = reader.result;
+					//this.folio.imagen = reader.result;
 					
 					fileDisplayArea1.appendChild(img);
 					
@@ -406,10 +423,10 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 
 		
 		//JavaScript para agregar la imagen 1
-		fileInput1.addEventListener('change', function(e) {
-			var file = fileInput1.files[0];
+		fileInput2.addEventListener('change', function(e) {
+			var file = fileInput2.files[0];
 			var imageType = /image.*/;
-
+			console.log(file);
 			if (file.type.match(imageType)) {
 				var reader = new FileReader();
 
@@ -433,9 +450,10 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 		});
 		
 			//JavaScript para agregar la imagen 2 Tarjeta
-		fileInput2.addEventListener('change', function(e) {
-			var file = fileInput2.files[0];
+		fileInput.addEventListener('change', function(e) {
+			var file = fileInput.files[0];
 			var imageType = /image.*/;
+			console.log(file);
 
 			if (file.type.match(imageType)) {
 				var reader = new FileReader();
