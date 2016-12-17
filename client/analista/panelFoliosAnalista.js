@@ -4,10 +4,11 @@ angular
 function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $stateParams, toastr) {
 
 	let rc = $reactive(this).attach($scope);
-
+	
+	window = rc;
 	
   this.action = true;
-	this.subscribe('folios',()=>{
+	this.subscribe('foliosPanel',()=>{
 			return [{verificacionEstatus :{$gte:"1",$lt:"7"}, folioEstatus: "1" , analista_id:  Meteor.userId() }]
 	});
 		
@@ -23,6 +24,11 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 	  folios : () => {
 		  return Folios.find();
 	  },
+	  foliosPorLlamar : () => {
+		  return Folios.find({analista_id: Meteor.user() != undefined ? Meteor.user()._id : "" ,folioEstatus : "1", $or:[{verificacionEstatus :"1"},
+																																																										 {verificacionEstatus :"2"}				  			
+		  																																																							]}).fetch();
+	  },	  
 	  foliosVisitados : () => {	
 		  var visitados = Folios.find({verificacionEstatus : "3", verificacionRazon: {$ne : "No encontrado cliente"} }).fetch();
 		  if(visitados){
@@ -102,10 +108,17 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 		
 	this.finalizarFolio = function(id)
 	{
-			console.log(id);
 			var folio = Folios.findOne({_id:id});
 			folio.folioEstatus = "2";			//Folio Finalizado
-			Folios.update({_id:id}, {$set : {folioEstatus : folio.folioEstatus}});
+			Folios.update({_id:id}, {$set : {folioEstatus : folio.folioEstatus}});		
+	};
+	
+	this.llamadoFolio = function(id)
+	{
+			var folio = Folios.findOne({_id:id});
+			console.log(folio);
+			folio.EsLlamado = "1";			//Folio Llamado por el analista
+			Folios.update({_id:id}, {$set : {EsLlamado : "1"}});
 	};
 		
 	this.getAnalista = function(usuario_id)

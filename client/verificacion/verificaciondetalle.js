@@ -9,6 +9,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	
 	
 	this.fecha = {};
+	this.imagenSeleccionada = "";
 	this.fechavisita = new Date();
 	
 /*
@@ -51,18 +52,18 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 	
 	
   this.guardarPizarron = function(imagen){
-	  var pizarra = Pizarrones.findOne();
-	  //console.log('me estoy guardando')
-	  if(pizarra){
-		  Pizarrones.update(pizarra._id, {$set:{imagen:imagen}});
-		  
-		}else{
-			Pizarrones.insert({imagen:imagen,grupo_id:this.grupo});
+	  var folio = Folios.findOne();
+	  console.log(folio);
+	  if(folio){
+		  Folios.update({_id:$stateParams.id}, {$set:{firma:imagen}});
 		}
+		/*else{
+			Pizarrones.insert({imagen:imagen,grupo_id:this.grupo});
+		}*/
   }
 	
 	this.autorun(() => {
-   	var imagsrc = this.getReactively('pizarrones');
+   	var imagsrc = this.getReactively('folio.firma');
    	var image = new Image();
    	//console.log(imagsrc);
    	if(imagsrc && imagsrc.imagen ){
@@ -110,11 +111,11 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 		        toastr.error('Error al guardar los datos.');
 		        return;
 		  }
-		  
+		  //tipo
 		  var tip = $stateParams.tip;
 		  
-		  console.log(this.fechavisita);
-		  console.log("FechaVisita: ",folio.fechavisita);
+		  //console.log(this.fechavisita);
+		  //console.log("FechaVisita: ",folio.fechavisita);
 		  if (!folio.fechavisita)
 		  	 folio.fechavisita = this.fechavisita;
 		  
@@ -126,12 +127,22 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			delete folio._id;		
 			
 			
-			Folios.update({_id:idTemp},{$set:folio});
-			toastr.success('Actualizado correctamente.');
-			$('.collapse').collapse('hide');
-			this.nuevo = true;
-			form.$setPristine();
-	    form.$setUntouched();
+			Folios.update({_id:idTemp},{$set:folio}, 
+																			function(error,result){
+																				if (error){
+																					  console.log("Error:",error);
+																				}	  
+																				if (result)
+																				{
+																						toastr.success('Actualizado correctamente.');
+																						$('.collapse').collapse('hide');
+																						this.nuevo = true;
+																						form.$setPristine();
+																				    form.$setUntouched();
+																				}	 
+																			}
+																	);
+			
 	    
 	   
 	    
@@ -156,6 +167,21 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 			
 			Folios.update({_id:id}, {$set : {verificacionEstatus : folio.verificacionEstatus}});
 			$state.go('root.home');
+	};
+	
+	this.mostrarImagen = function(imagen)
+	{
+			console.log(imagen);
+			this.imagenSeleccionada = imagen;
+			$('#myModal').modal('show')
+	};
+
+	
+	this.resetCanvas = function()
+	{
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
 	};
 	
 	this.getRazones = function(folioSel){
@@ -228,11 +254,9 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					this.folio.Imagen2 = imagen;
 					//console.log(this.folio);
 			}else{
-					this.folio.Imagen = imagen;
+					this.folio.tarjetaImagen = imagen;
 					//console.log(this.folio);
 			}
-			
-			
 		
 	}
 	
@@ -312,7 +336,7 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 				}
 			})
 			.mouseup(function(e){
-				//rc.guardarPizarron(myCanvas.toDataURL("image/png"));
+				rc.guardarPizarron(myCanvas.toDataURL("image/png"));
 				rc.isDown = false;
 				ctx.closePath();
 
@@ -371,34 +395,6 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 */
 		
 		//JavaScript para agregar la imagen 0
-		fileInput.addEventListener('change', function(e) {
-			var file = fileInput.files[0];
-			var imageType = /image.*/;
-
-			if (file.type.match(imageType)) {
-				var reader = new FileReader();
-
-				reader.onload = function(e) {
-					fileDisplayArea.innerHTML = "";
-
-					var img = new Image();
-					img.src = reader.result;
-
-					rc.AlmacenaImagen(reader.result,1);
-					this.folio.imagen0 = reader.result;
-					
-					fileDisplayArea.appendChild(img);
-					
-				}
-				
-				reader.readAsDataURL(file);	
-			} else {
-				fileDisplayArea.innerHTML = "File not supported!";
-			}
-		});
-
-		
-		//JavaScript para agregar la imagen 1
 		fileInput1.addEventListener('change', function(e) {
 			var file = fileInput1.files[0];
 			var imageType = /image.*/;
@@ -413,10 +409,10 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 					img.src = reader.result;
 
 					rc.AlmacenaImagen(reader.result,1);
-					//this.folio.imagen1 = reader.result;
+					//this.folio.imagen = reader.result;
 					
 					fileDisplayArea1.appendChild(img);
-					//console.log(fileDisplayArea1);
+					
 				}
 				
 				reader.readAsDataURL(file);	
@@ -424,12 +420,13 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 				fileDisplayArea1.innerHTML = "File not supported!";
 			}
 		});
+
 		
-			//JavaScript para agregar la imagen 2
+		//JavaScript para agregar la imagen 1
 		fileInput2.addEventListener('change', function(e) {
 			var file = fileInput2.files[0];
 			var imageType = /image.*/;
-
+			console.log(file);
 			if (file.type.match(imageType)) {
 				var reader = new FileReader();
 
@@ -438,16 +435,44 @@ function verificacionDetalleCtrl($scope, $meteor, $reactive,  $state, $statePara
 
 					var img = new Image();
 					img.src = reader.result;
-					
+
 					rc.AlmacenaImagen(reader.result,2);
-					//this.folio.imagen2 = reader.result;
+					//this.folio.imagen1 = reader.result;
 					
 					fileDisplayArea2.appendChild(img);
+					//console.log(fileDisplayArea1);
 				}
 				
 				reader.readAsDataURL(file);	
 			} else {
 				fileDisplayArea2.innerHTML = "File not supported!";
+			}
+		});
+		
+			//JavaScript para agregar la imagen 2 Tarjeta
+		fileInput.addEventListener('change', function(e) {
+			var file = fileInput.files[0];
+			var imageType = /image.*/;
+			console.log(file);
+
+			if (file.type.match(imageType)) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					fileDisplayArea.innerHTML = "";
+
+					var img = new Image();
+					img.src = reader.result;
+					
+					rc.AlmacenaImagen(reader.result,3);
+					//this.folio.imagen2 = reader.result;
+					
+					fileDisplayArea.appendChild(img);
+				}
+				
+				reader.readAsDataURL(file);	
+			} else {
+				fileDisplayArea.innerHTML = "File not supported!";
 			}
 		});
 

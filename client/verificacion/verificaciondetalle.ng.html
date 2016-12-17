@@ -255,7 +255,7 @@
 							<input type="file" id="fileInput1">
 							<div id="fileDisplayArea1" style="display: none;" ></div>
 						</div>
-						<img class="thumbnail" src="{{vd.folio.Imagen1}}" width="200" height="200"/>
+						<img class="thumbnail" src="{{vd.folio.Imagen1}}" width="200" height="200" ng-click="vd.mostrarImagen(vd.folio.Imagen1)"/>
 					</div>
 					<div class="col-sm-4">
 						<label>Evidencia 2</label>
@@ -264,7 +264,7 @@
 							<input type="file" id="fileInput2">
 							<div id="fileDisplayArea2" style="display: none;" ></div>
 						</div>
-						<img class="thumbnail" src="{{vd.folio.Imagen2}}" width="200" height="200"/>
+						<img class="thumbnail" src="{{vd.folio.Imagen2}}" width="200" height="200" ng-click="vd.mostrarImagen(vd.folio.Imagen2)"/>
 					</div>
 					<div class="col-sm-4" ng-show ="!vd.folio.plan">
 						<label>Tarjeta</label>
@@ -273,20 +273,20 @@
 							<input type="file" id="fileInput">
 							<div id="fileDisplayArea" style="display: none;" ></div>
 						</div>
-						<img class="thumbnail" src="{{vd.folio.Imagen}}" width="200" height="200"/>
+						<img class="thumbnail" src="{{vd.folio.tarjetaImagen}}" width="200" height="200" ng-click="vd.mostrarImagen(vd.folio.tarjetaImagen)"/>
 					</div>
 				</div>
 			</div>
-			
 			<div class="row">
+				<a class="btn btn-primary" role="button" ng-click="vd.resetCanvas()">
+				  Limpiar Firma
+				</a>
 				<div class="col-sm-8 col-sm-offset-2">
 					<canvas id="myCanvas" style="width: 600px; height: 300px; border:1px solid #000000;">
 							Sorry, your browser does not support HTML5 canvas technology.
 						</canvas>	
 				</div>
 			</div>
-			
-			
 			<div class="row">
 				<div class="col-sm-12">
 					<input type="submit" ng-click="vd.actualizar(vd.folio,form)" value="Actualizar" class="btn btn-primary" ng-show="vd.op==1" valida-form formulario="form"/>	
@@ -296,3 +296,22 @@
 		</form>
 	</div>
 </div>
+
+
+<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Previsualización</h4>
+      </div>
+      <div class="modal-body">
+        <img src="{{vd.imagenSeleccionada}}" width="800" height="1200" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+

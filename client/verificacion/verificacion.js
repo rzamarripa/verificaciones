@@ -6,7 +6,7 @@ function verificacionCtrl($scope, $meteor, $reactive,  $state, $stateParams, toa
 	let rc = $reactive(this).attach($scope);
 
   this.action = true;
-	this.subscribe('folios',()=>{
+	this.subscribe('foliosPanel',()=>{
 			return [{folioEstatus: "1", verificacionEstatus :{$gte:"2",$lt:"6"}, verificador_id: Meteor.user() != undefined ? Meteor.user()._id : ""}]
 	});
 	//Estatus 2 :  Asignado
