@@ -20,6 +20,7 @@ Meteor.publish("foliosPanel",function(params){
 	  																		 ,verificacionEstatus:1
 	  																		 ,folioEstatus:1
 	  																		 ,referencia:1
+	  																		 ,EsLlamado:1
 	  																		 }});
 });
 

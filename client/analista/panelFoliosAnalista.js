@@ -5,9 +5,9 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 
 	let rc = $reactive(this).attach($scope);
 	
-	window = rc;
+	Window = rc;
 	
-  this.action = true;
+  //this.action = true;
 	this.subscribe('foliosPanel',()=>{
 			return [{verificacionEstatus :{$gte:"1",$lt:"7"}, folioEstatus: "1" , analista_id:  Meteor.userId() }]
 	});
@@ -50,7 +50,7 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 	  }
   });
   
-  
+  /*
   this.nuevo = true;  
   this.nuevoFolio = function()
   {
@@ -86,7 +86,7 @@ function panelFoliosAnalistaCtrl($scope, $meteor, $reactive,  $state, $statePara
 			$('.collapse').collapse('show');
 			this.nuevo = false;
 	};
-	
+	*/
 	this.actualizar = function(folio,form)
 	{
 			if(form.$invalid){

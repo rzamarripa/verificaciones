@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-		    <tr ng-repeat="folio in pfa.foliosVisitados">
+		    <tr ng-repeat="folio in pfa.foliosVisitados" ng-class="folio.EsLlamado == '1' ? 'success' : ''">
 		    	<td><a ui-sref="root.verificaciondetalle({id : folio._id, op : 2})" >{{folio.folio}}</a></td>
 			    <td>{{folio.nombre}}</td>
 			    <td>{{folio.fecha.getUTCDate() +"/"+ (folio.fecha.getUTCMonth()+1) +"/"+ folio.fecha.getUTCFullYear()}} </td>
@@ -28,6 +28,7 @@
 							  </button>
 							  <ul class="dropdown-menu text-left">
 							    <li><a href="#" ng-click="pfa.finalizarFolio(folio._id)"><i class="fa fa-trash"></i> Finalizar</a></li>
+							    <li><a href="#" ng-click="pfa.llamadoFolio(folio._id)"><i class="fa fa-phone"></i> Llamado</a></li>
 							  </ul>
 							</div>
 				    </div>	
